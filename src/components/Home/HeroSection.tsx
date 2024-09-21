@@ -1,12 +1,12 @@
 const HeroSection = () => {
   return (
-    <section className="relative py-14 lg:pt-44 lg:pb-24 bg-gray-100">
+    <section className="relative pt-44 bg-gray-100">
       <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
         <div className="w-full max-w-4xl mx-auto sm:px-12 mb-10 lg:mb-20">
-          <h1 className="font-manrope font-bold text-4xl leading-snug sm:text-5xl text-center mb-5 text-black">
-            Rent a bike any where in the Bangladesh
+          <h1 className="font-manrope font-bold text-4xl leading-snug sm:text-4xl text-center mb-5 text-black">
+            Rent a bike any where in the<span className="text-[rgb(59_113_202/var(--tw-text-opacity))]"> Bangladesh</span>
           </h1>
-          <p className="text-xl font-medium leading-8 text-gray-400 text-center mb-14 max-w-xl mx-auto">
+          <p className="text-md font-medium leading-8 text-gray-400 text-center mb-14 max-w-xl mx-auto">
           Save money, meet awesome people, and consume less
           </p>
           <div className="parent flex flex-col sm:flex-row items-center max-w-xl mx-auto justify-center gap-y-4 sm:justify-between pr-2 sm:pr-1 sm:bg-white rounded-full mb-5 relative group transition-all duration-500 border border-transparent hover:border-indigo-600 focus-within:border-indigo-600">

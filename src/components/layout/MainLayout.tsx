@@ -5,32 +5,7 @@ import Sidebar from './Sidebar';
 import { useAppDispatch } from '../../redux/hooks';
 import { logout } from '../../redux/features/auth/authSlice';
 
-const { Header, Content, Footer, Sider } = Layout;
-
-// const items: MenuProps['items'] = [
-//   {
-//     key: 'Dashboard',
-//     label: <NavLink to='/admin/dashboard'>Dashboard</NavLink>
-//   },
-//   {
-//     key: 'User Managerment',
-//     label: 'User Managerment',
-//     children: [
-//       {
-//         key: 'Create Admin',
-//         label: <NavLink to='/admin/create-admin'>Create Admin</NavLink>
-//       },
-//       {
-//         key: 'Create Faculty',
-//         label: <NavLink to='/admin/create-faculty'>Create Faculty</NavLink>
-//       },
-//       {
-//         key: 'Create Student',
-//         label: <NavLink to='/admin/create-student'>Create Student</NavLink>
-//       },
-//     ]
-//   },
-// ]
+const { Header, Content, Footer } = Layout;
 
 const MainLayout = () => {
   const dispatch = useAppDispatch(); 

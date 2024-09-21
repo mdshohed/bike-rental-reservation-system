@@ -11,7 +11,7 @@ import { logout, setUser } from '../features/auth/authSlice';
 
 const baseQuery = fetchBaseQuery({
   baseUrl: 'https://bike-rental-reservation-system-server-seven.vercel.app/api',
-  credentials: 'include',
+  // credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
 
@@ -36,7 +36,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
     const res = await fetch('https://bike-rental-reservation-system-server-seven.vercel.app/api/auth/refresh-token', {
       method: 'POST',
-      credentials: 'include',
+      // credentials: 'include',
     });
 
     const data = await res.json();

@@ -1,15 +1,20 @@
 import { FieldValues, useForm } from "react-hook-form";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
-import { useAppDispatch } from "../../redux/hooks";
-import { setUser, TUser } from "../../redux/features/auth/authSlice";
+import { useAppDispatch, useAppSelector } from "../../redux/hooks";
+import { selectCurrentUser, setUser, TUser, useCurrentToken } from "../../redux/features/auth/authSlice";
 import { verifyToken } from "../../utils/verifyToken";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 import logo from "../../assets/logo/bike-share-removebg-preview.png";
 import { useState } from "react";
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const token = useAppSelector(useCurrentToken); 
+  const currentUser = useAppSelector(selectCurrentUser); 
+  if(token&&currentUser) {
+    return <Navigate to={`/${currentUser.role}/dashboard`} replace={true}></Navigate>
+  }
   // const { register, handleSubmit } = useForm(
   //   {
   //     defaultValues: {
@@ -29,20 +34,25 @@ const Login = () => {
   console.log("data => ", data);
   console.log("error => ", error);
 
-  const onSubmit = async (data: FieldValues) => {
-    console.log(data);
-
+  // const [loginDetails, setLoginDetails] = useState<{email:string, password:string}>({email:'', password:''})
+  const onSubmit = async (e: FieldValues) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
     const toastId = toast.loading("Logging in");
+
     try {
       const userInfo = {
-        id: data.userId,
-        password: data.password,
+        email: email,
+        password: password,
       };
       const res = await login(userInfo).unwrap();
-
-      const user = verifyToken(res.data.accessToken) as TUser;
-
-      dispatch(setUser({ user: user, token: res.data.accessToken }));
+   
+      const user = verifyToken(res.token) as TUser;
+       console.log("res", res, user);
+      
+      dispatch(setUser({ user: user, token: res.token }));
       toast.success("Logged in", { id: toastId, duration: 2000 });
       navigate(`/${user.role}/dashboard`);
     } catch (err) {
@@ -78,6 +88,8 @@ const Login = () => {
               </label>
               <div className="relative flex items-center">
                 <input
+                  // onChange={(e)=>setLoginDetails({...loginDetails, email:e.target.value})}
+                  // value={loginDetails.email}
                   name="email"
                   type="email"
                   required
@@ -125,6 +137,8 @@ const Login = () => {
                   </div> */}
               <div className="relative items-center">
                 <input
+                  // onChange={(e)=>setLoginDetails({...loginDetails, password:e.target.value})}
+                  // value={loginDetails.password}
                   type={show ? "text" : "password"}
                   name="password"
                   className="w-full px-4 mb-5 rounded border py-2"
@@ -190,18 +204,19 @@ const Login = () => {
                 </label>
               </div>
               <div className="text-sm">
-                <a
-                  href="jajvascript:void(0);"
+                <Link
+                  to="/login"
                   className="text-blue-600 hover:underline font-semibold"
                 >
                   Forgot your password?
-                </a>
+                </Link>
               </div>
             </div>
 
             <div className="!mt-8">
               <button
-                type="button"
+                // onClick={handleSubmit}
+                type="submit"
                 className="w-full py-3 px-4 text-sm tracking-wide rounded-lg text-white bg-blue-600 hover:bg-blue-700 focus:outline-none"
               >
                 Sign in

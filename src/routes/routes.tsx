@@ -36,17 +36,17 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register></Register>
       },
+      {
+        path: "/admin",
+        element: <App></App>,
+        children: routeGenerator(adminPaths),
+      },
+      {
+        path: "/user",
+        element: <App></App>,
+        children: routeGenerator(userPaths)
+      },
     ],
-  },
-  {
-    path: "/admin",
-    element: <App></App>,
-    children: routeGenerator(adminPaths),
-  },
-  {
-    path: "/user",
-    element: <App></App>,
-    children: routeGenerator(userPaths)
   },
   
 ])

@@ -1,3 +1,4 @@
+import { userPaths } from '@/routes/user.routes';
 import { selectCurrentUser } from '../../redux/features/auth/authSlice';
 import { useAppSelector } from '../../redux/hooks';
 import { adminPaths } from '../../routes/admin.routes';
@@ -8,24 +9,20 @@ const { Sider } = Layout;
 
 const userRole = {
   ADMIN: "admin",
-  FACULT: "faculty",
-  STUDENT: "student"
+  USER: "user"
 }
 
 const Sidebar = () => {
   const user = useAppSelector(selectCurrentUser);
 
-  let sidebarItmes; 
+  let sidebarItems; 
 
   switch(user!.role){
     case userRole.ADMIN: 
-      sidebarItmes = sidebarItemsGenerator(adminPaths, userRole.ADMIN)
+      sidebarItems = sidebarItemsGenerator(adminPaths, userRole.ADMIN)
       break;
-    case userRole.FACULT: 
-      sidebarItmes = sidebarItemsGenerator(adminPaths, userRole.FACULT)
-      break;
-    case userRole.STUDENT: 
-      sidebarItmes = sidebarItemsGenerator(adminPaths, userRole.STUDENT)
+    case userRole.USER: 
+      sidebarItems = sidebarItemsGenerator(userPaths, userRole.USER)
       break;
     default: 
       break;
@@ -51,13 +48,13 @@ const Sidebar = () => {
             alignItems: 'center'
           }}
         >
-          <h1>PH-University</h1>
+          <h1>Bike-Share</h1>
         </div>
         <Menu 
           theme="dark" 
           mode="inline" 
           defaultSelectedKeys={['1']} 
-          items={sidebarItmes} 
+          items={sidebarItems} 
         />
       </Sider>
   );

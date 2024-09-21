@@ -1,7 +1,16 @@
 import { Link } from "react-router-dom";
 import logo from "../../assets/logo/bike-share-removebg-preview.png";
 import ThemeToggleButton from "./ThemeToggleButton";
+import { useAppDispatch, useAppSelector } from "@/redux/hooks";
+import { logout, useCurrentToken } from "@/redux/features/auth/authSlice";
+import { Button } from "antd";
 const Navbar = () => {
+  const token = useAppSelector(useCurrentToken);
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+  };
   return (
     <div>
       <nav className="lg:fixed transition-all top-0 left-0 z-50 duration-500 w-full bg-white">
@@ -9,7 +18,7 @@ const Navbar = () => {
           <div className="w-full flex flex-col lg:flex-row">
             <div className="flex justify-between lg:flex-row">
               <Link to="/" className="flex items-center">
-                <img src={logo} className="h-20" alt="" />
+                <img src={logo} className="h-16" alt="" />
               </Link>
               {/* <button
                 data-collapse-toggle="navbar"
@@ -45,8 +54,6 @@ const Navbar = () => {
                   </div>
                 </div>
               </div>
-
-              
             </div>
             <div
               className="hidden w-full lg:flex lg:pl-11 max-lg:mt-1 max-lg:h-screen max-lg:overflow-y-auto"
@@ -71,20 +78,25 @@ const Navbar = () => {
                 </li>
               </ul>
               <div className="flex lg:items-center w-full justify-start flex-col lg:flex-row gap-4 lg:w-max max-lg:gap-4 lg:ml-14 lg:justify-end">
-                
                 <ThemeToggleButton></ThemeToggleButton>
 
-                <Link to="/login">
-                  <button className="bg-indigo-50 text-indigo-600 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-indigo-100">
-                    Login
-                  </button>
-                </Link>
+                {token ? (
+                  <Button onClick={handleLogout}>Logout</Button>
+                ) : (
+                  <div>
+                    <Link to="/login">
+                      <button className="bg-indigo-50 text-indigo-600 rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-indigo-100">
+                        Login
+                      </button>
+                    </Link>
 
-                <Link to="/register">
-                  <button className="bg-indigo-600 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-indigo-700">
-                    Register
-                  </button>
-                </Link>
+                    <Link to="/register">
+                      <button className="bg-indigo-600 text-white rounded-full cursor-pointer font-semibold text-center shadow-xs transition-all duration-500 py-3 px-6 text-sm hover:bg-indigo-700">
+                        SignUP
+                      </button>
+                    </Link>
+                  </div>
+                )}
               </div>
             </div>
           </div>
