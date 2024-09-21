@@ -141,7 +141,8 @@ const Login = () => {
                   // value={loginDetails.password}
                   type={show ? "text" : "password"}
                   name="password"
-                  className="w-full px-4 mb-5 rounded border py-2"
+                  placeholder="Enter The Password"
+                  className="w-full text-sm px-4 my-3 rounded border py-3 outline-blue-600"
                 />
                 <button
                   type="button"
@@ -154,8 +155,10 @@ const Login = () => {
                       fill="none"
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
-                      stroke="currentColor"
-                      className="w-6 h-6"
+                       stroke="#bbb"
+                      
+                      className="w-4 h-4 "
+
                     >
                       <path
                         strokeLinecap="round"
@@ -170,7 +173,7 @@ const Login = () => {
                       viewBox="0 0 24 24"
                       strokeWidth="1.5"
                       stroke="currentColor"
-                      className="w-6 h-6"
+                      className="w-4 h-4"
                     >
                       <path
                         strokeLinecap="round"

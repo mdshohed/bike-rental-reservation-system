@@ -13,7 +13,7 @@ const Navbar = () => {
   };
   return (
     <div>
-      <nav className="lg:fixed transition-all top-0 left-0 z-50 duration-500 w-full bg-white">
+      <nav className="lg:fixed transition-all top-0 left-0 z-50 duration-500 w-full dark:bg-gray-800 light:bg-white text-surface/75 dark:text-gray-400">
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="w-full flex flex-col lg:flex-row">
             <div className="flex justify-between lg:flex-row">
@@ -63,7 +63,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/home"
-                    className="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-base text-gray-500 font-medium transition-all duration-500 hover:text-gray-900"
+                    className="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-base font-medium transition-all duration-300 dark:hover:text-gray-300 hover:text-gray-500"
                   >
                     Home
                   </Link>
@@ -71,7 +71,7 @@ const Navbar = () => {
                 <li>
                   <Link
                     to="/about-us"
-                    className="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left text-gray-500 font-medium transition-all duration-500 hover:text-gray-900"
+                    className="nav-link mb-2 block lg:mr-6 md:mb-0 lg:text-left  font-medium transition-all duration-300 dark:hover:text-gray-300 hover:text-gray-500"
                   >
                     About us
                   </Link>
@@ -107,3 +107,6 @@ const Navbar = () => {
 };
 
 export default Navbar;
+
+
+

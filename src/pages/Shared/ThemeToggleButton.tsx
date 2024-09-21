@@ -122,7 +122,7 @@ const ThemeToggleButton = () => {
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-4 h-4"
         >
           <path
             strokeLinecap="round"
@@ -137,7 +137,7 @@ const ThemeToggleButton = () => {
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"
-          className="w-6 h-6"
+          className="w-4 h-4"
         >
           <circle cx="12" cy="12" r="4" />
           <path d="M12 2v2" />

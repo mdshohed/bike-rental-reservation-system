@@ -4,6 +4,7 @@ import {  Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useAppDispatch } from '../../redux/hooks';
 import { logout } from '../../redux/features/auth/authSlice';
+import PrivateNav from '@/pages/Shared/PrivateNav';
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,11 +17,11 @@ const MainLayout = () => {
 
   return (
     <Layout style={{height: '100vh'}}>
-      <Sidebar></Sidebar>
+      {/* <Sidebar></Sidebar> */}
       <Layout>
-        <Header style={{ padding: 0}}>
+        {/* <Header style={{ padding: 0}}>
           <Button onClick={handleLogout}>Logout</Button>
-        </Header>
+        </Header> */}
         <Content style={{ margin: '24px 16px 0' }}>
           <div
             style={{
@@ -31,9 +32,9 @@ const MainLayout = () => {
             <Outlet></Outlet>
           </div>
         </Content>
-        <Footer style={{ textAlign: 'center' }}>
+        {/* <Footer style={{ textAlign: 'center' }}>
           Ant Design ©{new Date().getFullYear()} Created by Shohedul Islam
-        </Footer>
+        </Footer> */}
       </Layout>
     </Layout>
   );
