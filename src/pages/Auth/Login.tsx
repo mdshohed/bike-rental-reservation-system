@@ -5,7 +5,7 @@ import { selectCurrentUser, setUser, TUser, useCurrentToken } from "../../redux/
 import { verifyToken } from "../../utils/verifyToken";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import logo from "../../assets/logo/bike-share-removebg-preview.png";
+import logo from "../../assets/logo/bike-zone.png";
 import { useState } from "react";
 const Login = () => {
   const navigate = useNavigate();
@@ -54,7 +54,7 @@ const Login = () => {
       
       dispatch(setUser({ user: user, token: res.token }));
       toast.success("Logged in", { id: toastId, duration: 2000 });
-      navigate(`/${user.role}/dashboard`);
+      navigate(`/${user.role}/profile`);
     } catch (err) {
       toast.error("Someting went wrong", { id: toastId });
     }
@@ -71,19 +71,19 @@ const Login = () => {
   // };
 
   return (
-    <div className="relative py-32  bg-gray-100">
+    <div className="relative py-32  bg-zinc-50 text-surface/75 dark:bg-gray-900 dark:text-white/75">
 
       <div className="flex flex-col justify-center font-[sans-serif] ">
         <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
           <div className="text-center mb-4">
             <img src={logo} alt="logo" className="w-40 inline-block" />
           </div>
-          <h2 className="text-gray-800 text-center text-2xl font-bold">
+          <h2 className=" text-center text-2xl font-bold">
             Sign in
           </h2>
           <form onSubmit={onSubmit} className="mt-8 space-y-4">
             <div>
-              <label className="text-gray-800 text-sm mb-2 block">
+              <label className=" text-sm mb-2 block">
                 User Email
               </label>
               <div className="relative flex items-center">
@@ -93,7 +93,7 @@ const Login = () => {
                   name="email"
                   type="email"
                   required
-                  className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
+                  className="w-full  text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
                   placeholder="Enter user Email"
                 />
                 <svg
@@ -113,13 +113,13 @@ const Login = () => {
             </div>
 
             <div>
-              <label className="text-gray-800 text-sm mb-2 block">Password</label>
+              <label className=" text-sm mb-2 block">Password</label>
               {/* <div className="relative flex items-center">
                     <input
                       name="password"
                       type="password"
                       required
-                      className="w-full text-gray-800 text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
+                      className="w-full  text-sm border border-gray-300 px-4 py-3 rounded-md outline-blue-600"
                       placeholder="Enter password"
                     />
                     <svg
@@ -142,7 +142,7 @@ const Login = () => {
                   type={show ? "text" : "password"}
                   name="password"
                   placeholder="Enter The Password"
-                  className="w-full text-sm px-4 my-3 rounded border py-3 outline-blue-600"
+                  className="w-full text-black text-sm px-4 my-3  rounded border py-3 outline-blue-600"
                 />
                 <button
                   type="button"
@@ -201,7 +201,7 @@ const Login = () => {
                 />
                 <label
                   htmlFor="remember-me"
-                  className="ml-3 block text-sm text-gray-800"
+                  className="ml-3 block text-sm "
                 >
                   Remember me
                 </label>
@@ -225,7 +225,7 @@ const Login = () => {
                 Sign in
               </button>
             </div>
-            <p className="text-gray-800 text-sm !mt-8 text-center">
+            <p className=" text-sm !mt-8 text-center">
               Don't have an account?{" "}
               <Link
                 to="/register"

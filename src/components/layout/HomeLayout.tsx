@@ -6,7 +6,7 @@ import { Outlet } from "react-router-dom";
 
 const HomeLayout = () => {
   return (
-    <div>
+    <div className="light">
       {/* <Navbar></Navbar> */}
       <PrivateNav></PrivateNav>
       

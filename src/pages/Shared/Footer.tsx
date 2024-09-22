@@ -186,7 +186,7 @@ const Footer = () => {
           </div>
         </div>
       </div>
-      <div className="bg-black p-4 text-center">
+      <div className=" p-4 text-center">
           <span>© {new Date().getFullYear()} Developed By </span>
           <a className="font-semibold" href="https://tw-elements.com/">
             Shohedul Islam

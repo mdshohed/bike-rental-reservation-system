@@ -94,6 +94,15 @@ import { useState, useEffect } from "react";
 const ThemeToggleButton = () => {
   const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
 
+  useEffect(()=>{
+    if(window.matchMedia(`(prefers-color-schema: dark)`).matches){
+      setTheme('dark');
+    }
+    else{
+      setTheme('light');
+    }
+  },[])
+
   useEffect(() => {
     const root = document.documentElement;
 

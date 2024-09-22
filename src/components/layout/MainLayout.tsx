@@ -1,10 +1,9 @@
 
-import { Button, Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import {  Outlet } from 'react-router-dom';
 import Sidebar from './Sidebar';
 import { useAppDispatch } from '../../redux/hooks';
 import { logout } from '../../redux/features/auth/authSlice';
-import PrivateNav from '@/pages/Shared/PrivateNav';
 
 const { Header, Content, Footer } = Layout;
 
@@ -16,7 +15,7 @@ const MainLayout = () => {
   }
 
   return (
-    <Layout style={{height: '100vh'}}>
+    <Layout style={{height: '100vh'}} >
       {/* <Sidebar></Sidebar> */}
       <Layout>
         {/* <Header style={{ padding: 0}}>

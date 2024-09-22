@@ -1,9 +1,9 @@
 const HeroSection = () => {
   return (
-    <section className="relative pt-44 bg-gray-100">
+    <section className="relative pt-44 bg-gray-100 dark:bg-gray-900">
       <div className="w-full max-w-7xl mx-auto px-4 lg:px-8">
         <div className="w-full max-w-4xl mx-auto sm:px-12 mb-10 lg:mb-20">
-          <h1 className="font-manrope font-bold text-4xl leading-snug sm:text-4xl text-center mb-5 text-black">
+          <h1 className="font-manrope font-bold text-4xl leading-snug sm:text-4xl text-center mb-5 text-black dark:text-white">
             Rent a bike any where in the<span className="text-[rgb(59_113_202/var(--tw-text-opacity))]"> Bangladesh</span>
           </h1>
           <p className="text-md font-medium leading-8 text-gray-400 text-center mb-14 max-w-xl mx-auto">

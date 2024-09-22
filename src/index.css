@@ -20,3 +20,8 @@ html {
 html.dark {
   background-color: var(--bg-color-dark);
 }
+
+.dark{
+  --background: 254, 202, 202;
+  
+}

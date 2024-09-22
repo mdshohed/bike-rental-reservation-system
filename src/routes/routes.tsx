@@ -9,6 +9,7 @@ import { userPaths } from "./user.routes";
 import ErrorPage from "@/pages/Shared/ErrorPage";
 import HomeLayout from "@/components/layout/HomeLayout";
 import About from "@/pages/About";
+import BikeManagement from "@/components/BikeManagement/BikeManagement";
 
 const router = createBrowserRouter([
   {
@@ -23,6 +24,10 @@ const router = createBrowserRouter([
       {
         path: '/home',
         element: <Home />,
+      },
+      {
+        path: '/bike-management',
+        element: <BikeManagement />,
       },
       {
         path: '/about-us',
