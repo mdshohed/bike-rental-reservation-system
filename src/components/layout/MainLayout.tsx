@@ -16,24 +16,18 @@ const MainLayout = () => {
 
   return (
     <Layout style={{height: '100vh'}} >
-      {/* <Sidebar></Sidebar> */}
       <Layout>
-        {/* <Header style={{ padding: 0}}>
-          <Button onClick={handleLogout}>Logout</Button>
-        </Header> */}
-        <Content style={{ margin: '24px 16px 0' }}>
+
+        <Content 
+        >
           <div
-            style={{
-              padding: 24,
-              minHeight: 360,
-            }}
+          className='mx-auto max-w-7xl px-2 sm:px-6 lg:px-8'
+
           >
             <Outlet></Outlet>
           </div>
         </Content>
-        {/* <Footer style={{ textAlign: 'center' }}>
-          Ant Design ©{new Date().getFullYear()} Created by Shohedul Islam
-        </Footer> */}
+
       </Layout>
     </Layout>
   );

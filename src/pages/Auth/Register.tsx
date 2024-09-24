@@ -35,30 +35,29 @@ const Register = () => {
     }
     try {
       const res = await SignUp(register).unwrap();
-      console.log("res", res);
 
       toast.success("Register Successful!", { id: toastId, duration: 2000 });
       navigate(`/login`);
     } catch (err) {
-      toast('My action toast', {
-        action: {
-          label: 'Action',
-          onClick: () => console.log('Action!'),
-        },
-      });
-      // toast.error("Something went wrong", { id: toastId });
+      // toast('My action toast', {
+      //   action: {
+      //     label: 'Action',
+      //     onClick: () => console.log('Action!'),
+      //   },
+      // });
+      toast.error("Something went wrong", { id: toastId });
     }
   };
 
   return (
-    <div className="overflow-hidden py-32 lg:pb-24  bg-zinc-50 text-surface/75 dark:bg-gray-900 dark:text-white/75">
+    <div className="overflow-hidden py-10 lg:pb-24  bg-zinc-50 text-surface/75 dark:bg-gray-900 dark:text-white/75">
       <div className="flex flex-col  font-[sans-serif]">
         <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
           <div className="text-center ">
-            <img src={logo} alt="logo" className="w-40 inline-block" />
+            <img src={logo} alt="logo" className="w-32 inline-block" />
           </div>
           <h2 className=" text-center text-2xl font-bold">
-            Register in
+            Sign Up
           </h2>
           <form onSubmit={onSubmit}>
             <div className="space-y-6">

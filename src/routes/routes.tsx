@@ -10,6 +10,8 @@ import ErrorPage from "@/pages/Shared/ErrorPage";
 import HomeLayout from "@/components/layout/HomeLayout";
 import About from "@/pages/About";
 import BikeManagement from "@/components/BikeManagement/BikeManagement";
+import BikeView from "@/components/BikeManagement/BikeView";
+import AboutUs from "@/components/AboutUs/AboutUs";
 
 const router = createBrowserRouter([
   {
@@ -30,8 +32,12 @@ const router = createBrowserRouter([
         element: <BikeManagement />,
       },
       {
+        path: '/bike-management/:id',
+        element: <BikeView />,
+      },
+      {
         path: '/about-us',
-        element: <About />,
+        element: <AboutUs />,
       },
       {
         path: "/login",

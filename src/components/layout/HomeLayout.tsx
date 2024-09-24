@@ -1,5 +1,4 @@
 import Footer from "@/pages/Shared/Footer";
-import Navbar from "@/pages/Shared/Navbar";
 import PrivateNav from "@/pages/Shared/PrivateNav";
 import { Outlet } from "react-router-dom";
 
@@ -7,7 +6,7 @@ import { Outlet } from "react-router-dom";
 const HomeLayout = () => {
   return (
     <div className="light">
-      {/* <Navbar></Navbar> */}
+
       <PrivateNav></PrivateNav>
       
       <Outlet></Outlet>

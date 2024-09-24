@@ -31,8 +31,8 @@ const Login = () => {
 
   const [login, { data, error }] = useLoginMutation();
 
-  console.log("data => ", data);
-  console.log("error => ", error);
+  // console.log("data => ", data);
+  // console.log("error => ", error);
 
   // const [loginDetails, setLoginDetails] = useState<{email:string, password:string}>({email:'', password:''})
   const onSubmit = async (e: FieldValues) => {
@@ -50,13 +50,12 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
    
       const user = verifyToken(res.token) as TUser;
-       console.log("res", res, user);
       
       dispatch(setUser({ user: user, token: res.token }));
       toast.success("Logged in", { id: toastId, duration: 2000 });
-      navigate(`/${user.role}/profile`);
+      navigate(`/`);
     } catch (err) {
-      toast.error("Someting went wrong", { id: toastId });
+      toast.error("Something went wrong", { id: toastId });
     }
   };
 
@@ -71,17 +70,17 @@ const Login = () => {
   // };
 
   return (
-    <div className="relative py-32  bg-zinc-50 text-surface/75 dark:bg-gray-900 dark:text-white/75">
+    <div className="relative py-10 bg-zinc-50 text-surface/75 dark:bg-gray-900 dark:text-white/75">
 
       <div className="flex flex-col justify-center font-[sans-serif] ">
         <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
           <div className="text-center mb-4">
-            <img src={logo} alt="logo" className="w-40 inline-block" />
+            <img src={logo} alt="logo" className="w-32 inline-block" />
           </div>
           <h2 className=" text-center text-2xl font-bold">
             Sign in
           </h2>
-          <form onSubmit={onSubmit} className="mt-8 space-y-4">
+          <form onSubmit={onSubmit} className=" space-y-4">
             <div>
               <label className=" text-sm mb-2 block">
                 User Email

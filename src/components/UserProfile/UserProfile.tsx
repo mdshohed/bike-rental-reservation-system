@@ -1,4 +1,57 @@
+import { useGetProfileQuery, useUpdateProfileMutation } from "@/redux/features/user/userApi";
+import { TProfile } from "@/types/profile";
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
+import { toast } from "sonner";
+
 const UserProfile = () => {
+  // Use the query without passing token explicitly
+  //  const token = useAppSelector(useCurrentToken); // Get token from Redux
+  const [toggle, setToggle] = useState(false);
+  const [profileDetail, setProfileDetail] = useState<TProfile>({} as TProfile)
+  
+  const { data: profileData } = useGetProfileQuery(null);
+  const [updateProfile] = useUpdateProfileMutation();
+  useEffect(()=>{
+    if(profileData && profileData?.data){
+      const data = {
+        name: profileData.data.name,
+        email: profileData.data.email,
+        phone: profileData.data.phone,
+        address: profileData.data.address,
+      }
+      setProfileDetail(data); 
+    }
+  },[profileData])
+
+  // const { register, handleSubmit, reset } = useForm({
+  //   defaultValues: {
+  //     ame: profileData.data.name,
+  //     email: profileData.data.email,
+  //     phone: profileData.data.phone,
+  //     address: profileData.data.address,
+  //   },
+  // });
+  
+  const handleUpdateProfile = async(e: any) => {
+    e.preventDefault();
+    const toastId = toast.loading('Loading In...') 
+    for(const key in profileDetail) {
+      if(profileDetail[key as keyof TProfile]===''){
+        return toast.error("Input Field Mush not be Empty!", { id: toastId, duration: 2000 }); 
+      }
+    }
+
+    const res = await updateProfile( profileDetail).unwrap()
+    if(res.statusCode===200 && res.success){
+      toast.success('Profile Updated Successfully!', {id:toastId, duration:1000});
+      setToggle(e=>!e); 
+    }
+    else{
+      toast.error("Something went wrong", { id: toastId });
+    }
+  };
+
   return (
     <div className="">
       <div className=" max-w-7xl mx-auto ">
@@ -14,75 +67,198 @@ const UserProfile = () => {
             <div className="flex flex-col sm:flex-row max-sm:gap-5 items-center justify-between mb-5">
               <div className="block">
                 <h3 className="font-manrope font-bold text-3xl text-gray-900 mb-1">
-                  Shohedul Islam
+                  {profileData?.data?.name}
                 </h3>
-                <p className="font-normal text-base leading-7 text-gray-500">
-                </p>
+                <p className="font-normal text-base leading-7 text-gray-500"></p>
               </div>
             </div>
           </div>
-          <div className="">
-            <div className="flex justify-between items-center bg-gray-200">
-               <div className="px-4 py-5 sm:px-6 ">
-                <h3 className="text-lg leading-6 font-medium text-gray-900">
-                  User Profile
-                </h3>
-                {/* <p className="mt-1 max-w-2xl text-sm text-gray-500">
+
+          {toggle ? (
+            <div className="max-w-2xl mx-auto">
+              <div className="flex justify-between items-center bg-gray-200">
+                <div className="px-4 py-5 sm:px-6 ">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">
+                    Update Profile
+                  </h3>
+                </div>
+                <div>
+                  {!toggle ? (
+                    <button
+                      onClick={() => setToggle((current) => !current)}
+                      className="text-indigo-600 me-10 hover:text-indigo-900"
+                    >
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 24 24"
+                        fill="currentColor"
+                        className="size-6"
+                      >
+                        <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                        <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                      </svg>
+                    </button>
+                  ) : null}
+                </div>
+              </div>
+
+              <div className="border mb-2 rounded-md border-gray-200 px-4 py-5 sm:p-0">
+                <div  className="p-4 ">
+                  <div className="grid gap-4 mb-4 sm:grid-cols-2 sm:gap-6 sm:mb-5">
+                    <div className="w-full">
+                      <label
+                        htmlFor="name"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Full Name
+                      </label>
+                      <input
+                        
+                        type="text"
+                        name="name"
+                        id="name"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        value={profileDetail.name}
+                        onChange={(e)=>setProfileDetail({...profileDetail, name: e.target.value})}
+                        placeholder="Enter Full name"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label
+                        htmlFor="email"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Email
+                      </label>
+                      <input
+                        type="text"
+                        name="email"
+                        id="email"
+                        className="bg-gray-200 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        value={profileDetail.email}
+                        disabled
+                        // onChange={(e)=>setProfileDetail({...profileDetail, email: e.target.value})}
+                        placeholder="Enter email"
+                      />
+                    </div>
+                    <div className="w-full">
+                      <label
+                        htmlFor="phone"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Phone
+                      </label>
+                      <input
+                        type="text"
+                        name="phone"
+                        id="phone"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        value={profileDetail.phone}
+                        onChange={(e)=>setProfileDetail({...profileDetail, phone: e.target.value})}
+                        placeholder="Enter Phone Number"
+                      />
+                    </div>
+                    <div>
+                      <label
+                        htmlFor="address"
+                        className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                      >
+                        Address
+                      </label>
+                      <input
+                        type="text"
+                        name="address"
+                        id="address"
+                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                        value={profileDetail.address}
+                        onChange={(e)=>setProfileDetail({...profileDetail, address: e.target.value})}
+                        placeholder="Enter address"
+                      />
+                    </div>
+                  </div>
+                  <div className="flex py-5 items-center justify-center space-x-4">
+                    <button
+                      onClick={handleUpdateProfile}
+                      className=" bg-green-700 text-white hover:bg-primary-800 focus:outline-none  font-medium rounded-lg text-sm px-5 py-2.5 text-center "
+                    >
+                      Update
+                    </button>
+                    <button
+                      onClick={()=>setToggle((e)=>!e)}
+                      className="text-black bg-gray-300  inline-flex items-center border focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center  "
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ) : (
+            <div className="max-w-2xl mx-auto">
+              <div className="flex justify-between items-center bg-gray-200">
+                <div className="px-4 py-5 sm:px-6 ">
+                  <h3 className="text-lg leading-6 font-medium text-gray-900">
+                    User Profile
+                  </h3>
+                  {/* <p className="mt-1 max-w-2xl text-sm text-gray-500">
                   This is some information about the user.
                 </p> */}
+                </div>
+                <div>
+                  <button
+                    onClick={() => setToggle((current) => !current)}
+                    className="text-indigo-600 me-10 hover:text-indigo-900"
+                  >
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 24 24"
+                      fill="currentColor"
+                      className="size-6"
+                    >
+                      <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
+                      <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
+                    </svg>
+                  </button>
+                </div>
               </div>
-              <div>
-              <button className="text-indigo-600 me-10 hover:text-indigo-900">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  fill="currentColor"
-                  className="size-6"
-                >
-                  <path d="M21.731 2.269a2.625 2.625 0 0 0-3.712 0l-1.157 1.157 3.712 3.712 1.157-1.157a2.625 2.625 0 0 0 0-3.712ZM19.513 8.199l-3.712-3.712-8.4 8.4a5.25 5.25 0 0 0-1.32 2.214l-.8 2.685a.75.75 0 0 0 .933.933l2.685-.8a5.25 5.25 0 0 0 2.214-1.32l8.4-8.4Z" />
-                  <path d="M5.25 5.25a3 3 0 0 0-3 3v10.5a3 3 0 0 0 3 3h10.5a3 3 0 0 0 3-3V13.5a.75.75 0 0 0-1.5 0v5.25a1.5 1.5 0 0 1-1.5 1.5H5.25a1.5 1.5 0 0 1-1.5-1.5V8.25a1.5 1.5 0 0 1 1.5-1.5h5.25a.75.75 0 0 0 0-1.5H5.25Z" />
-                </svg>
-                </button>
+              <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
+                <dl className="sm:divide-y  sm:divide-gray-200">
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-md font-medium text-gray-500">
+                      Full name
+                    </dt>
+                    <dd className="mt-1 font-medium text-md text-gray-900 sm:mt-0 sm:col-span-2">
+                      {profileData?.data?.name}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">
+                      Email address
+                    </dt>
+                    <dd className="mt-1 font-medium text-md  text-gray-900 sm:mt-0 sm:col-span-2">
+                      {profileData?.data?.email}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">
+                      Phone number
+                    </dt>
+                    <dd className="mt-1 font-medium text-md text-gray-900 sm:mt-0 sm:col-span-2">
+                      {profileData?.data?.phone}
+                    </dd>
+                  </div>
+                  <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                    <dt className="text-sm font-medium text-gray-500">
+                      Address
+                    </dt>
+                    <dd className="mt-1 font-medium text-md text-gray-900 sm:mt-0 sm:col-span-2">
+                      {profileData?.data?.address}
+                    </dd>
+                  </div>
+                </dl>
               </div>
             </div>
-           
-            <div className="border-t border-gray-200 px-4 py-5 sm:p-0">
-              <dl className="sm:divide-y sm:divide-gray-200">
-                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
-                    Full name
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    John Doe
-                  </dd>
-                </div>
-                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
-                    Email address
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    johndoe@example.com
-                  </dd>
-                </div>
-                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">
-                    Phone number
-                  </dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    (123) 456-7890
-                  </dd>
-                </div>
-                <div className="py-3 sm:py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
-                  <dt className="text-sm font-medium text-gray-500">Address</dt>
-                  <dd className="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
-                    123 Main St
-                    <br />
-                    Anytown, USA 12345
-                  </dd>
-                </div>
-              </dl>
-            </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

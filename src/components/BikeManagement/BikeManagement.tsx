@@ -29,6 +29,12 @@ import {
 import { ListBulletIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
 import { AlignJustify } from 'lucide-react'
+import { useGetAllBikesQuery } from '@/redux/features/bikes/bikesApi'
+import BikeCard1 from './BikeCard1'
+import { TBike } from '@/utils'
+import BikeCard2 from './BikeCard2'
+import GlobalLoader from '../ui/loaders/GlobalLoader'
+import { Flex, Spin } from 'antd'
 
 const sortOptions = [
   { name: 'Best Rating', href: '#', current: false },
@@ -75,9 +81,14 @@ function classNames(...classes: any[]) {
 
 const BikeManagement = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+  const [cardMode, setCardMode] = useState('list'); 
+  const {data: bikes, isLoading, error} = useGetAllBikesQuery(null); 
+  
 
   return (
     <div className="">
+      {isLoading && <GlobalLoader />}
+            
       <div className='dark:bg-gray-900 dark:text-white text-gray-900 bg-white bg-opacity-25 '>
         {/* Mobile filter dialog */}
         <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 lg:hidden">
@@ -157,7 +168,7 @@ const BikeManagement = () => {
         </Dialog>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
+          <div className="flex items-baseline justify-between border-b border-gray-200 pt-8 pb-5 ">
             <h1 className="text-xl font-bold tracking-tight">Bike List</h1>
 
             <div className="flex items-center">
@@ -182,7 +193,7 @@ const BikeManagement = () => {
                         <a
                           href={option.href}
                           className={classNames(
-                            option.current ? 'font-medium ' : '',
+                            option.current ? 'font-medium text-black dark:text-white' : ' ',
                             'block px-4 py-2 text-sm data-[focus]:bg-gray-100',
                           )}
                         >
@@ -194,13 +205,12 @@ const BikeManagement = () => {
                 </MenuItems>
               </Menu>
 
-              <button type="button" className="-m-2 ml-5  hover:text-gray-500 sm:ml-7">
+              <button onClick={()=>setCardMode('square')} type="button" className="-m-2 ml-5  hover:text-gray-500 ">
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
               </button>
-              <button type="button" className="    hover:text-gray-500 sm:ml-7">
+              <button onClick={()=>setCardMode('list')} type="button" className="    hover:text-gray-500 ml-7">
                 <span className="sr-only">View grid</span>
-                {/* <ListBulletIcon aria-hidden="true" className="h-6 w-6 font-bold " /> */}
                 <AlignJustify className="h-6 w-6 font-bold " />
               </button>
 
@@ -267,7 +277,31 @@ const BikeManagement = () => {
               </form>
 
               {/* Product grid */}
-              <div className="lg:col-span-3">{/* Your content */}</div>
+              <div className="lg:col-span-3">
+                
+                {/* <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16"> */}
+                  {
+                    cardMode==='list' ? 
+                    <div className="grid grid-cols-1 gap-y-5">
+                      {
+                        bikes?.data?.map( (item: TBike)=>(
+                          <BikeCard2 item={item}></BikeCard2>
+                        ))
+                      }
+                    </div>
+                    : 
+                    <div className="grid grid-cols-1  sm:grid-cols-2 gap-10">
+                      {
+                        bikes?.data?.map( (item: TBike)=>(
+                          <BikeCard1 item={item}></BikeCard1>
+                        ))
+                      }
+                    </div>
+                  }
+                  
+                {/* </div> */}
+
+              </div>
             </div>
           </section>
         </main>

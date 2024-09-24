@@ -6,3 +6,15 @@ export type TUser = {
   password?: string,
   cpassword?: string,
 }
+
+export interface TBike {
+  _id?: string ;
+  name: string;
+  description: string;
+  pricePerHour: number;
+  isAvailable: boolean;
+  cc: number;
+  year: number;
+  model: string;
+  brand: string;
+}

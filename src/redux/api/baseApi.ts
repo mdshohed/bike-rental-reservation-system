@@ -8,9 +8,26 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
 import { logout, setUser } from '../features/auth/authSlice';
+import { toast } from 'sonner';
+
+// const baseQuery = fetchBaseQuery({
+//   // baseUrl: 'https://bike-rental-reservation-system-server-seven.vercel.app/api',
+//   baseUrl: 'http://localhost:5000/api',
+//   // credentials: 'include',
+//   prepareHeaders: (headers, { getState }) => {
+//     const token = (getState() as RootState).auth.token;
+//     console.log("token", token);
+    
+//     if (token) {
+//       headers.set('authorization', `${token}`);
+//     }
+
+//     return headers;
+//   },
+// });
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: 'https://bike-rental-reservation-system-server-seven.vercel.app/api',
+  baseUrl: 'http://localhost:5000/api',
   // credentials: 'include',
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;
@@ -18,7 +35,6 @@ const baseQuery = fetchBaseQuery({
     if (token) {
       headers.set('authorization', `${token}`);
     }
-
     return headers;
   },
 });
@@ -30,11 +46,18 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 > = async (args, api, extraOptions): Promise<any> => {
   let result = await baseQuery(args, api, extraOptions);
 
+  // if (result?.error?.status === 404) {
+  //   toast.error(result.error.data ? result.error..message);
+  // }
+  // if (result?.error?.status === 403) {
+  //   toast.error(result.error.data.message);
+  // }
   if (result?.error?.status === 401) {
     //* Send Refresh
     console.log('Sending refresh token');
 
-    const res = await fetch('https://bike-rental-reservation-system-server-seven.vercel.app/api/auth/refresh-token', {
+    // const res = await fetch('https://bike-rental-reservation-system-server-seven.vercel.app/api/auth/refresh-token', {
+    const res = await fetch('http://localhost:5000/api/auth/refresh-token', {
       method: 'POST',
       // credentials: 'include',
     });
@@ -62,7 +85,7 @@ const baseQueryWithRefreshToken: BaseQueryFn<
 
 export const baseApi = createApi({
   reducerPath: 'baseApi',
-  tagTypes: ['data'],
   baseQuery: baseQueryWithRefreshToken,
+  tagTypes: ['bikes', 'rentalBike', 'user'],
   endpoints: () => ({}),
 });
