@@ -1,5 +1,6 @@
 
 import { useAddPaymentMutation } from "@/redux/features/payment/stripeApi";
+import { useCreateRentalMutation } from "@/redux/features/rentalBike/rentalBikeApi";
 import { clearBookingDetail } from "@/redux/features/rentalBike/rentalSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
@@ -19,6 +20,7 @@ const CheckoutForm = () => {
 
   const [clientSecret, setClientSecret] = useState("");
   const { bookingId, selectedTime } = useAppSelector((store) => store.rental);
+  const [createRental] = useCreateRentalMutation(); 
 
   useEffect(() => {
     const initiatePayment = async () => {
@@ -35,7 +37,6 @@ const CheckoutForm = () => {
 
 
   const handleSubmit = async (event: any) => {
-    // Block native form submission.
     event.preventDefault();
     if(!details.name || !details.email){
       (Object.keys(details) as (keyof {name: string, email: string})[]).forEach((key) => {
@@ -55,7 +56,8 @@ const CheckoutForm = () => {
       return;
     }
 
-    // Use your card Element with other Stripe.js APIs
+    const toastId = toast.loading("Rental Processing");
+
     const { error, paymentMethod } = await stripe.createPaymentMethod({
       type: "card",
       card,
@@ -63,9 +65,9 @@ const CheckoutForm = () => {
 
     if (error) {
       console.log("[error]", error);
+      toast.error(error.message, {id:toastId, duration: 2000})
       setError(error.message || "");
     } else {
-      console.log("[PaymentMethod]", paymentMethod);
       setError("");
     }
 
@@ -80,24 +82,27 @@ const CheckoutForm = () => {
         },
       });
     if (confirmError) {
-      console.log("confirm Error");
+      toast.error('confirm Error', { id:toastId, duration: 2000})
     } else {
       console.log("payment Intent", paymentIntent);
       if (paymentIntent.status === "succeeded") {
         console.log(`transaction id: ${paymentIntent.id}`);
         setTransactionId(paymentIntent.id);
-
-        const res = await addOrderInfo(orderData).unwrap();
-              
-        if(res.statusCode===200&&res.success){
-          // dispatch(clearBookingDetail())
-          navigate(`/`);
+        const payload = {
+          bikeId: bookingId,
+          startTime: selectedTime
         }
-        
-        if(isError){
-          toast.error(`${res.message}`);
-        }
+        try{
+          const res = await createRental(payload).unwrap(); 
+          if(res.statusCode===200&&res.success){
+            navigate(`/bike-management/${bookingId}`);
+            dispatch(clearBookingDetail())
+            toast.success(`${res.message}`, {id: toastId, duration:2000});
+          }
 
+        }catch(err){
+          toast.error('Booking Error!', {id: toastId, duration: 2000});
+        }
       }
     }
   };

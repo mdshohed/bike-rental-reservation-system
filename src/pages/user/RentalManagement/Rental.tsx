@@ -1,11 +1,13 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import UnpaidTable from "./UnpaidTable";
+import PaidTable from "./PaidTable";
 
 const Rental = () => {
   return (
     <div className="mt-5">
       <Tabs
         defaultValue="unpaid"
-        className="flex flex-col ms-0 sm:ms-14 justify-center items-center"
+        className=""
       >
         <TabsList>
           <TabsTrigger defaultChecked value="unpaid">
@@ -14,9 +16,11 @@ const Rental = () => {
           <TabsTrigger value="paid">Paid</TabsTrigger>
         </TabsList>
         <TabsContent value="unpaid">
-          Make changes to your account here.
+          <UnpaidTable></UnpaidTable>
         </TabsContent>
-        <TabsContent value="paid">Change your password here.</TabsContent>
+        <TabsContent value="paid">
+          <PaidTable></PaidTable>
+        </TabsContent>
       </Tabs>
     </div>
   );

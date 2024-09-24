@@ -195,7 +195,7 @@ const BikeView = () => {
                             </button>
                           </div>
                           <div onClick={handleNavigateToCheckout}>
-                            <button className="btn bg-blue-500 px-4 py-2 text-md rounded-md text-white">
+                            <button className="btn bg-blue-500 px-7 py-2 text-md rounded-md text-white">
                               Pay
                             </button>
                           </div>
@@ -215,8 +215,8 @@ const BikeView = () => {
               setIsModalOpen(false);
             }}
             footer={() => (
-              <div className="flex justify-end items-stretch">
-                <button onClick={() => navigate("/login")}>Yes, Proceed to Login</button>
+              <div className="flex  justify-end items-stretch">
+                <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={() => navigate("/login")}>Yes, Proceed to Login</button>
               </div>
             )}
           >
