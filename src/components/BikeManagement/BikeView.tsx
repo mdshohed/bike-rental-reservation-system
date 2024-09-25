@@ -54,7 +54,9 @@ const BikeView = () => {
       const payload = {
         bookingId: id, 
         selectedTime: selectedTime, 
+        method: 'create'
       }
+      
       dispatch(addBookingDetail(payload))
       navigate(`/user/checkout/`);
     }

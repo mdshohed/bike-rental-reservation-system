@@ -8,7 +8,6 @@ import {
 } from '@reduxjs/toolkit/query/react';
 import { RootState } from '../store';
 import { logout, setUser } from '../features/auth/authSlice';
-import { toast } from 'sonner';
 
 // const baseQuery = fetchBaseQuery({
 //   // baseUrl: 'https://bike-rental-reservation-system-server-seven.vercel.app/api',
@@ -17,11 +16,9 @@ import { toast } from 'sonner';
 //   prepareHeaders: (headers, { getState }) => {
 //     const token = (getState() as RootState).auth.token;
 //     console.log("token", token);
-    
 //     if (token) {
 //       headers.set('authorization', `${token}`);
 //     }
-
 //     return headers;
 //   },
 // });

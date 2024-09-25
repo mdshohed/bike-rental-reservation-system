@@ -20,12 +20,13 @@ const persistConfig = {
 }
 
 const persisteAuthReducer = persistReducer(persistConfig, authReducer)
+const persistrRentalReducer = persistReducer(persistConfig, rentalSlice)
 
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer, 
     auth: persisteAuthReducer,
-    rental: rentalSlice, 
+    rental: persistrRentalReducer, 
   },
   middleware: (getDefaultMiddlewares) => getDefaultMiddlewares({
     serializableCheck: {
