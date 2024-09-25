@@ -1,9 +1,9 @@
 import AdminProfile from "@/pages/admin/AdminProfile";
-import AdminDashboard from "../pages/admin/AdminDashboard";
 import UserList from "@/pages/admin/UserManagement/UserList";
 import ReturnBike from "@/pages/admin/ReturnBike/ReturnBike";
 import CouponManagement from "@/pages/admin/CouponManagement/CouponManagement";
 import UserProfile from "@/components/UserProfile/UserProfile";
+import ManageBike from "@/pages/admin/BikeManagement/ManageBike";
 
 
 export const adminPaths = [
@@ -13,14 +13,18 @@ export const adminPaths = [
     element: <UserProfile />,
   },
   {
-    // name: 'Dashboard',
     index:true,
-    element: <AdminDashboard />,
+    element: <UserProfile />,
   },
   {
     name: 'Return Bike',
     path: 'return-bike',
     element: <ReturnBike/>,
+  },
+  {
+    name: 'Bike Manage',
+    path: '/admin/bike-management',
+    element: <ManageBike/>,
   },
   {
     name: 'Coupon Management',

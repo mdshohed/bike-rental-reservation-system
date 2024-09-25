@@ -4,17 +4,8 @@ import type { TableProps } from "antd";
 import { useGetAllUserQuery, useUpdateUserMutation } from "@/redux/features/user/userApi";
 import { TUser } from "@/utils";
 import { toast } from "sonner";
-
-interface DataType {
-  _id: string;
-  name: string;
-  email: string;
-  phone: string;
-  address: string;
-  role: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
+import { timeDiff } from "@/utils/common";
+import create from "@ant-design/icons/lib/components/IconFont";
 
 const UserList: React.FC = () => {
   const { data: user, isLoading } = useGetAllUserQuery(null);
@@ -59,7 +50,7 @@ const UserList: React.FC = () => {
 
   }
 
-  const columns: TableProps<DataType>["columns"] = [
+  const columns: TableProps<TUser>["columns"] = [
     {
       title: "Name",
       dataIndex: "name",
@@ -103,7 +94,7 @@ const UserList: React.FC = () => {
           currentDate.getTime() - memberSinceDate.getTime()
         );
         const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
-        return `${diffDays} days ago`;
+        return timeDiff(createdAt);
       },
     },
     {
@@ -145,7 +136,7 @@ const UserList: React.FC = () => {
         <h1 className="text-3xl text-black font-semibold">User Management</h1>
         <h1 className="text-md my-4">Manage User Role and Permissions</h1>
       </div>
-      <Table<DataType>
+      <Table<TUser>
         columns={columns}
         dataSource={user?.data}
         loading={isLoading}

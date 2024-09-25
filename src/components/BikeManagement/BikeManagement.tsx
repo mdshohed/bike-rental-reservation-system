@@ -34,8 +34,6 @@ import BikeCard1 from './BikeCard1'
 import { TBike } from '@/utils'
 import BikeCard2 from './BikeCard2'
 import GlobalLoader from '../ui/loaders/GlobalLoader'
-import { Flex, Spin } from 'antd'
-
 const sortOptions = [
   { name: 'Best Rating', href: '#', current: false },
   { name: 'Price: Low to High', href: '#', current: false },

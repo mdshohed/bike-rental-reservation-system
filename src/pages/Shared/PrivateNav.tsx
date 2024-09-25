@@ -21,7 +21,7 @@ import logo from "../../assets/logo/bike-zone.png";
 const navigation = [
   { name: "Home", role: "public", href: "/home", current: false },
   {
-    name: "Bike Management",
+    name: "Bikes",
     role: "public",
     href: "/bike-management",
     current: false,
@@ -174,6 +174,14 @@ export default function PrivateNav() {
                           className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
                         >
                           User Management
+                        </Link>
+                      </MenuItem>
+                      <MenuItem>
+                        <Link
+                          to="/admin/bike-management"
+                          className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                        >
+                          Bike Management
                         </Link>
                       </MenuItem>
                       <MenuItem>

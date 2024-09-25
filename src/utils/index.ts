@@ -8,6 +8,8 @@ export type TUser = {
   password?: string,
   cpassword?: string,
   isActive?: boolean
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface TBike {
