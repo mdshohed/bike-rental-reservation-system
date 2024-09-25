@@ -1,10 +1,13 @@
 export type TUser = {
+  _id?: string,
   name?: string,
   email?: string,
   phone?: string,
+  role?: string,
   address?: string,
   password?: string,
   cpassword?: string,
+  isActive?: boolean
 }
 
 export interface TBike {

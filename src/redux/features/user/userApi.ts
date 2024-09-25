@@ -2,6 +2,15 @@ import { baseApi } from "../../api/baseApi";
 
 const authApi = baseApi.injectEndpoints({
   endpoints: (builder) =>( {
+    getAllUser: builder.query({
+      query: () => {
+        return{
+          url: '/users',
+          method: 'GET',
+        }},
+        providesTags: ["user"]
+      }
+    ),
     getProfile: builder.query({
       query: () => {
         return{
@@ -20,8 +29,20 @@ const authApi = baseApi.injectEndpoints({
         }
       },
       invalidatesTags: ["user"],
+    }),
+    updateUser: builder.mutation({
+      query: ( {id, data}) => {       
+        console.log("redux",id, data);
+         
+        return {
+          url: `/users/${id}`,
+          method: 'PUT',
+          body: data, 
+        }
+      },
+      invalidatesTags: ["user"],
     })
   })
 })
 
-export const { useGetProfileQuery, useUpdateProfileMutation } = authApi; 
+export const { useGetAllUserQuery, useGetProfileQuery, useUpdateProfileMutation, useUpdateUserMutation} = authApi; 
