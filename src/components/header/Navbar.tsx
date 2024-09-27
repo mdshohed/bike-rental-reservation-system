@@ -124,8 +124,8 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="bg-slate-900 w-full">
-      <div className="container mx-auto md:px-[4%] px-4 text-white font-semibold flex justify-between items-center">
+    <nav className="bg-slate-900 ">
+      <div className="max-w-7xl mx-auto px-[5%] text-white font-semibold flex justify-between items-center">
         <div className="hidden md:block">
           {navItems.map((item, index) => (
             <NavLink

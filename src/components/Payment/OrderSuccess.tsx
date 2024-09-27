@@ -8,7 +8,7 @@ const OrderSuccess = () => {
 
   return (
     <section className="py-24 relative">
-      <div className="w-full max-w-7xl px-4 md:px-5 lg-6 mx-auto">
+      <div className="max-w-7xl px-[5%] md:px-5 lg-6 mx-auto">
         <h2 className="font-manrope font-bold text-xl w-64 mx-auto rounded-md leading-10 text-center bg-emerald-50 text-emerald-600">
           Order Successful
         </h2>

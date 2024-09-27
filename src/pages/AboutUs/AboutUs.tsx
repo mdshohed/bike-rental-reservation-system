@@ -1,6 +1,6 @@
 const AboutUs = () => {
   return (
-    <div className="mx-auto text-black dark:text-white container max-w-7xl px-4">
+    <div className="mx-auto text-black dark:text-white container max-w-7xl px-[5%]">
       <section className="py-10  rounded-lg shadow sm:flex  " id="services">
         <div className="container bg-white dark:bg-gray-900 mx-auto px-4">
           <h1 className="text-5xl mb-4 lg:mb-8 justify-center flex">

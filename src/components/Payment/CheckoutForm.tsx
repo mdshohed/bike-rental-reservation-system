@@ -139,7 +139,7 @@ const CheckoutForm = () => {
   return (
     <div>
       <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16 flex justify-center">
-        <div className="mx-auto max-w-screen-xl px-4 2xl:px-0">
+        <div className="mx-auto max-w-screen-xl px-[5%] 2xl:px-0">
           <div className="mx-auto max-w-2xl">
             <h2 className="text-xl ms-2 font-semibold text-gray-900 dark:text-white sm:text-2xl">
               Payment

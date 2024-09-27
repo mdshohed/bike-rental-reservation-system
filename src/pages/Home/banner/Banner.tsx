@@ -19,8 +19,8 @@ export function Banner() {
     {
       id: 1,
       image: sliderImage1,
-      title: 'Big Savings on Top Gear', 
-      description: 'On selected sports apparel and accessories. Limited time offer!',
+      title: 'Rent a bike any where in the Bangladesh', 
+      description: 'Save money, meet awesome people, and consume less',
       discount:'Up to 50% Off'
     },
     {
