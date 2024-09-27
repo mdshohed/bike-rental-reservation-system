@@ -1,6 +1,9 @@
 export function timeDiff(givenDate: string | Date): string {
   const date = (typeof givenDate === 'string') ? new Date(givenDate) : givenDate;
   
+  if(date===undefined){
+    return 'Invalid Date'
+  }
   if (isNaN(date.getTime())) {
     // Handle invalid date input
     return "Invalid date";

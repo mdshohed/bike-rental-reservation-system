@@ -26,13 +26,6 @@ const navigation = [
     href: "/bike-management",
     current: false,
   },
-  { name: "Return Bike", role: "admin", href: "/admin/return-bike", current: false },
-  {
-    name: "Rental Details",
-    role: "user",
-    href: "/user/rental-management",
-    current: false,
-  },
   { name: "About Us", role: "public", href: "/about-us", current: false },
 ];
 
@@ -43,10 +36,13 @@ export default function PrivateNav() {
 
   const handleLogout = () => {
     dispatch(logout());
-    return <Navigate to="/login"></Navigate>
+    return <Navigate to="/login"></Navigate>;
   };
   return (
-    <Disclosure as="nav" className="bg-zinc-50 text-center text-surface/75 dark:text-white/75 dark:bg-gray-800">
+    <Disclosure
+      as="nav"
+      className="bg-zinc-50 text-center text-surface/75 dark:text-white/75 dark:bg-gray-800"
+    >
       <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div className="relative flex h-16 items-center justify-between">
           <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
@@ -66,11 +62,7 @@ export default function PrivateNav() {
           </div>
           <div className="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
             <div className="flex flex-shrink-0 items-center">
-              <img
-                alt="Your Company"
-                src={logo}
-                className="h-12 w-auto"
-              />
+              <img alt="Your Company" src={logo} className="h-12 w-auto" />
             </div>
             <div className="hidden  sm:ml-6 sm:block">
               <div className="flex space-x-4">
@@ -90,7 +82,8 @@ export default function PrivateNav() {
                         {item.name}
                       </Link>
                     );
-                  } if (item.role === user?.role) {
+                  }
+                  if (item.role === user?.role) {
                     return (
                       <Link
                         key={item.name}
@@ -105,15 +98,22 @@ export default function PrivateNav() {
                         {item.name}
                       </Link>
                     );
-                  } 
+                  }
                 })}
               </div>
             </div>
           </div>
 
+          <div className="me-4">
+            <Link to={`${user?.role}/dashboard`}>
+              <p className="block px-4 py-2 text-sm text-gray-200 bg-blue-500 rounded-lg  data-[focus]:bg-gray-100">
+                Dashboard
+              </p>
+            </Link>
+          </div>
           <div className="me-3">
-              <ThemeToggleButton></ThemeToggleButton>
-            </div>
+            <ThemeToggleButton></ThemeToggleButton>
+          </div>
           {!token ? (
             <div>
               <Link to="/login">
@@ -130,14 +130,14 @@ export default function PrivateNav() {
             </div>
           ) : (
             <div className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto  sm:pr-0">
-                <button
-                  type="button"
-                  className="relative me-2 rounded-full bg-white dark:bg-gray-900  p-1   "
-                >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon aria-hidden="true" className="h-6 w-6" />
-                </button>
+              <button
+                type="button"
+                className="relative me-2 rounded-full bg-white dark:bg-gray-900  p-1   "
+              >
+                <span className="absolute -inset-1.5" />
+                <span className="sr-only">View notifications</span>
+                <BellIcon aria-hidden="true" className="h-6 w-6" />
+              </button>
               {/* Profile dropdown */}
               <Menu as="div" className="relative text-start ml-3">
                 <div>
@@ -156,7 +156,9 @@ export default function PrivateNav() {
                   className="absolute right-0 z-10 mt-2 w-60 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                 >
                   <div className=" border-b-2">
-                    <p className="block text-md font-bold px-4 py-2 text-gray-700 data-[focus]:bg-gray-100">{user?.userEmail}</p>
+                    <p className="block text-md font-bold px-4 py-2 text-gray-700 data-[focus]:bg-gray-100">
+                      {user?.userEmail}
+                    </p>
                   </div>
                   <MenuItem>
                     <Link

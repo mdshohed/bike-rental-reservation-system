@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 const BikeCard2 = ({item, }: {item: TBike}) => {
   const navigate = useNavigate(); 
   const handleNavigate = (id: string) =>{
-    navigate(`/bike-management/${id}`)
+    navigate(`/bikes/${id}`)
     // return <Navigate to={`/bike-management/${id}`}></Navigate>
   }
 

@@ -11,6 +11,7 @@ import {
   Table,
   Upload,
 } from "antd";
+import Swal from "sweetalert2";
 import type { TableProps } from "antd";
 import { TBike } from "@/types/bikes";
 import {
@@ -74,15 +75,25 @@ const ManageBike: React.FC = () => {
   // };
 
   const handleDeleteBike = async (id: string) => {
-    const toastId = toast.loading("Updated Loading...");
-    try {
-      await deleteBike(id);
-      toast.success("Deleted Bike Successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-    } catch (err) {
-      toast.error("Something went wrong", { id: toastId });
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    });
+    if (result.isConfirmed) {
+      const toastId = toast.loading("Updated Loading...");
+      try {
+        await deleteBike(id);
+        toast.success("Deleted Bike Successfully!", {
+          id: toastId,
+          duration: 2000,
+        });
+      } catch (err) {
+        toast.error("Something went wrong", { id: toastId });
+      }
     }
   };
 
@@ -252,10 +263,10 @@ const ManageBike: React.FC = () => {
     },
   ];
   return (
-    <div className="mt-10 overflow-x-auto">
+    <div className="mt-5 overflow-x-auto">
       <div>
-        <h1 className="text-3xl text-black font-semibold">Bike Management</h1>
-        <h1 className="text-[16px] my-4">Manage Bike Status</h1>
+        <h1 className="text-2xl text-black font-semibold">Bike Management</h1>
+        <h1 className="text-[16px] my-2">Manage Bike Status</h1>
       </div>
 
       {/* add Bike part */}
@@ -268,7 +279,7 @@ const ManageBike: React.FC = () => {
               <SearchField></SearchField>
             </div>
           </div>
-          <div>
+          <div className="me-4 sm:me-10">
             <Button
               type="primary"
               onClick={() => {

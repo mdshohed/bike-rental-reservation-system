@@ -1,28 +1,27 @@
 import UserProfile from "@/components/UserProfile/UserProfile";
 import Rental from "@/pages/user/RentalManagement/Rental";
-import BookingProcess from "@/pages/user/BookingProcess/BookingProcess";
-import Payment from "@/components/Payment/Payment";
+import UserDashboard from "@/pages/user/UserDashboard";
 
 export const userPaths = [
   {
     name: 'Dashboard',
-    path: 'profile',
-    element: <UserProfile />,
+    path: 'dashboard',
+    element: <UserDashboard />,
   },
   {
     name: 'Rental-Management',
     path: 'rental-management',
     element: <Rental />,
   },
+  // {
+  //   name: 'Rental-Management',
+  //   path: 'booking-bike',
+  //   element: <BookingProcess />,
+  // },
   {
-    name: 'Rental-Management',
-    path: 'booking-bike',
-    element: <BookingProcess />,
-  },
-  {
-    name: 'CheckOut',
-    path: 'checkout',
-    element: <Payment />,
+    name: 'User Profile',
+    path: 'profile',
+    element: <UserProfile />,
   },
   
 ];

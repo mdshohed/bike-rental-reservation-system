@@ -55,7 +55,10 @@ const Rental: React.FC = () => {
   ];
   
   return (
-    <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    <>
+    
+        <Tabs defaultActiveKey="1" items={items} onChange={onChange} />
+    </>
   )
 }
 

@@ -107,12 +107,18 @@ const ReturnBike: React.FC = () => {
     },
   ];
   return (
-    <div className="mt-10 overflow-x-auto">
-      <Table<DataType>
-        columns={columns}
-        dataSource={rentalData}
-        loading={isLoading}
-      />
+    <div className="mt-3">
+      <div>
+        <h1 className="text-2xl text-black font-semibold">Rental Details</h1>
+        <h1 className="text-md my-2">Manage Rental Details and Updated Bike Return</h1>
+      </div>
+      <div className="mt-10 overflow-x-auto">
+        <Table<DataType>
+          columns={columns}
+          dataSource={rentalData}
+          loading={isLoading}
+        />
+      </div>
     </div>
   );
 };

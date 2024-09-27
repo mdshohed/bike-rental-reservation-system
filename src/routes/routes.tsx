@@ -11,7 +11,8 @@ import HomeLayout from "@/components/layout/HomeLayout";
 import About from "@/pages/About";
 import BikeManagement from "@/components/BikeManagement/BikeManagement";
 import BikeView from "@/components/BikeManagement/BikeView";
-import AboutUs from "@/components/AboutUs/AboutUs";
+import AboutUs from "@/pages/AboutUs/AboutUs";
+import Payment from "@/components/Payment/Payment";
 
 const router = createBrowserRouter([
   {
@@ -28,12 +29,16 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: '/bike-management',
+        path: '/bikes',
         element: <BikeManagement />,
       },
       {
-        path: '/bike-management/:id',
+        path: '/bikes/:id',
         element: <BikeView />,
+      },
+      {
+        path: '/checkout',
+        element: <Payment />,
       },
       {
         path: '/about-us',
@@ -47,17 +52,17 @@ const router = createBrowserRouter([
         path: "/register",
         element: <Register></Register>
       },
-      {
-        path: "/admin",
-        element: <App></App>,
-        children: routeGenerator(adminPaths),
-      },
-      {
-        path: "/user",
-        element: <App></App>,
-        children: routeGenerator(userPaths)
-      },
     ],
+  },
+  {
+    path: "/admin",
+    element: <App></App>,
+    children: routeGenerator(adminPaths),
+  },
+  {
+    path: "/user",
+    element: <App></App>,
+    children: routeGenerator(userPaths)
   },
   
 ])

@@ -1,21 +1,22 @@
-import AdminProfile from "@/pages/admin/AdminProfile";
 import UserList from "@/pages/admin/UserManagement/UserList";
 import ReturnBike from "@/pages/admin/ReturnBike/ReturnBike";
 import CouponManagement from "@/pages/admin/CouponManagement/CouponManagement";
 import UserProfile from "@/components/UserProfile/UserProfile";
 import ManageBike from "@/pages/admin/BikeManagement/ManageBike";
+import AdminDashboard from "@/pages/admin/AdminDashboard";
 
 
 export const adminPaths = [
   {
     name: 'Dashboard',
-    path: 'profile',
-    element: <UserProfile />,
+    path: 'dashboard',
+    element: <AdminDashboard />,
   },
-  {
-    index:true,
-    element: <UserProfile />,
-  },
+ 
+  // {
+  //   index:true,
+  //   element: <UserProfile />,
+  // },
   {
     name: 'Return Bike',
     path: 'return-bike',
@@ -23,7 +24,7 @@ export const adminPaths = [
   },
   {
     name: 'Bike Manage',
-    path: '/admin/bike-management',
+    path: 'bike-management',
     element: <ManageBike/>,
   },
   {
@@ -35,5 +36,10 @@ export const adminPaths = [
     name: 'User Management',
     path: 'manage-user',
     element: <UserList></UserList>,
+  },
+  {
+    name: 'AdminProfile',
+    path: 'profile',
+    element: <UserProfile />,
   },
 ];

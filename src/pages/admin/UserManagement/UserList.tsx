@@ -6,28 +6,43 @@ import { TUser } from "@/utils";
 import { toast } from "sonner";
 import { timeDiff } from "@/utils/common";
 import create from "@ant-design/icons/lib/components/IconFont";
+import Swal from "sweetalert2";
 
 const UserList: React.FC = () => {
   const { data: user, isLoading } = useGetAllUserQuery(null);
   const [updateUser] = useUpdateUserMutation(); 
 
   const handleUpdateUser = async (data: TUser) => {
-    const toastId = toast.loading("Updated Loading...")
-    const payload = {
-      role: data.role === 'admin' ? 'user' : 'admin'
-    }
-    const id = data?._id;
-    try{
-      console.log(payload, id);
-      
-      const res = await updateUser({id:id, data:payload})
-      console.log({res});
-      
-      toast.success("Updated Successfully!", { id: toastId, duration: 2000 });
+    const result = await Swal.fire({
+      title: "Are you sure?",
+      icon: "question",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes!",
+      customClass:{
+        container: 'custom-swal'
+      }
+    });
+    if(result.isConfirmed){
+      const toastId = toast.loading("Updated Loading...")
+      const payload = {
+        role: data.role === 'admin' ? 'user' : 'admin'
+      }
+      const id = data?._id;
+      try{
+        console.log(payload, id);
+        
+        const res = await updateUser({id:id, data:payload})
+        console.log({res});
+        
+        toast.success("Updated Successfully!", { id: toastId, duration: 2000 });
 
-    }catch(err){
-      toast.error("Something went wrong", { id: toastId });
+      }catch(err){
+        toast.error("Something went wrong", { id: toastId });
+      }
     }
+    
   };
 
   const handleChangeActive = async (data: TUser) =>{
@@ -131,10 +146,10 @@ const UserList: React.FC = () => {
   ];
 
   return (
-    <div className="mt-10 overflow-x-auto">
+    <div className="mt-5 overflow-x-auto">
       <div>
-        <h1 className="text-3xl text-black font-semibold">User Management</h1>
-        <h1 className="text-md my-4">Manage User Role and Permissions</h1>
+        <h1 className="text-2xl text-black font-semibold">User Management</h1>
+        <h1 className="text-md my-2">Manage User Role and Permissions</h1>
       </div>
       <Table<TUser>
         columns={columns}

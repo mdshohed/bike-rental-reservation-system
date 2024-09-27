@@ -5,7 +5,7 @@ import { selectCurrentUser, setUser, TUser, useCurrentToken } from "../../redux/
 import { verifyToken } from "../../utils/verifyToken";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import logo from "../../assets/logo/bike-zone.png";
+import logo from "../../assets/logo/bike-zone-2.png";
 import { useState } from "react";
 const Login = () => {
   const navigate = useNavigate();
@@ -50,9 +50,10 @@ const Login = () => {
       const res = await login(userInfo).unwrap();
    
       const user = verifyToken(res.token) as TUser;
-      
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+
       dispatch(setUser({ user: user, token: res.token }));
-      toast.success("Logged in", { id: toastId, duration: 2000 });
+      toast.success("Logged in", { id: toastId, duration: 100, position: 'bottom-right' });
       navigate(`/`);
     } catch (err) {
       toast.error("Something went wrong", { id: toastId });
@@ -75,7 +76,7 @@ const Login = () => {
       <div className="flex flex-col justify-center font-[sans-serif] ">
         <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
           <div className="text-center mb-4">
-            <img src={logo} alt="logo" className="w-32 inline-block" />
+            <img src={logo} alt="logo" className="w-[180px] inline-block" />
           </div>
           <h2 className=" text-center text-2xl font-bold">
             Sign in

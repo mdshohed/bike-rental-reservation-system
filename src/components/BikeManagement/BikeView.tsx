@@ -1,22 +1,11 @@
 import { useGetSingleBikesQuery } from "@/redux/features/bikes/bikesApi";
-import { useEffect, useState } from "react";
-import { Navigate, useNavigate, useParams } from "react-router-dom";
+import {  useState } from "react";
+import {  useNavigate, useParams } from "react-router-dom";
 
 import dayjs from "dayjs";
 
-import en from "antd/es/date-picker/locale/en_US";
 import buddhistEra from "dayjs/plugin/buddhistEra";
 
-const buddhistLocale: typeof en = {
-  ...en,
-  lang: {
-    ...en.lang,
-    fieldDateFormat: "BBBB-MM-DD",
-    fieldDateTimeFormat: "BBBB-MM-DD HH:mm:ss",
-    yearFormat: "BBBB",
-    cellYearFormat: "BBBB",
-  },
-};
 dayjs.extend(buddhistEra);
 
 import { Description, Dialog, DialogPanel } from "@headlessui/react";
@@ -58,7 +47,7 @@ const BikeView = () => {
       }
       
       dispatch(addBookingDetail(payload))
-      navigate(`/user/checkout/`);
+      navigate(`/checkout`);
     }
   };
 

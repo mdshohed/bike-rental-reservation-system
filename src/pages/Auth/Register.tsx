@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import logo from "../../assets/logo/bike-zone.png";
+import logo from "../../assets/logo/bike-zone-2.png";
 import { FieldValues } from "react-hook-form";
 import { useState } from "react";
 import { TUser } from "@/utils";
@@ -54,7 +54,7 @@ const Register = () => {
       <div className="flex flex-col  font-[sans-serif]">
         <div className="max-w-md w-full mx-auto border border-gray-300 rounded-2xl p-8">
           <div className="text-center ">
-            <img src={logo} alt="logo" className="w-32 inline-block" />
+            <img src={logo} alt="logo" className="w-[180px] inline-block" />
           </div>
           <h2 className=" text-center text-2xl font-bold">
             Sign Up

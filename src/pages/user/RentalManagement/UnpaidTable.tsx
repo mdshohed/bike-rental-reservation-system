@@ -27,7 +27,7 @@ const UnpaidTable: React.FC = () => {
         key: item?._id, 
         name: item.bikeId.name,
         startTime: item.startTime, 
-        returnTime: item.returnTime? item.returnTime : 'Pending', 
+        returnTime: item.returnTime? item.returnTime : 'N/A', 
         totalPaid: item.totalPaid,
         totalCost: parseFloat(item.totalCost).toFixed(3),
       }}
