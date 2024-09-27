@@ -3,7 +3,7 @@
 const ContactSection = () => {
   return (
     <div className="max-w-7xl mx-auto px-[5%] py-10">
-      <div className="flex flex-col lg:flex-row bg-gray-100 gap-5">
+      <div className="flex  flex-col lg:flex-row bg-gray-100 gap-5">
         {/* Contact Info Section */}
         <div className="lg:w-[50%]">
           <div className="mb-8">

@@ -13,7 +13,7 @@
   ```
 */
 
-import { useState } from 'react'
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -25,71 +25,135 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-} from '@headlessui/react'
-import { ListBulletIcon, XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import { AlignJustify } from 'lucide-react'
-import { useGetAllBikesQuery } from '@/redux/features/bikes/bikesApi'
-import BikeCard1 from './BikeCard1'
-import { TBike } from '@/utils'
-import BikeCard2 from './BikeCard2'
-import GlobalLoader from '../ui/loaders/GlobalLoader'
+} from "@headlessui/react";
+import { ListBulletIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  FunnelIcon,
+  MinusIcon,
+  PlusIcon,
+  Squares2X2Icon,
+} from "@heroicons/react/20/solid";
+import { AlignJustify, MapPinHouse, Phone } from "lucide-react";
+import { useGetAllBikesQuery } from "@/redux/features/bikes/bikesApi";
+import BikeCard1 from "./BikeCard1";
+import { TBike } from "@/utils";
+import BikeCard2 from "./BikeCard2";
+import GlobalLoader from "../ui/loaders/GlobalLoader";
+import SearchField from "@/pages/Home/search/SearchField";
+import { Select } from "antd";
 const sortOptions = [
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
+  { label: "Default", value: "all" },
+  { label: "Cost: Low to High", value: "low" },
+  { label: "Cost: High to Low", value: "high" },
+];
 const subCategories = [
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
-  { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
-]
+  { name: "Totes", href: "#" },
+  { name: "Backpacks", href: "#" },
+  { name: "Travel Bags", href: "#" },
+  { name: "Hip Bags", href: "#" },
+  { name: "Laptop Sleeves", href: "#" },
+];
 const filters = [
   {
-    id: 'color',
-    name: 'Color',
+    id: "color",
+    name: "Color",
     options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
+      { value: "white", label: "White", checked: false },
+      { value: "beige", label: "Beige", checked: false },
+      { value: "blue", label: "Blue", checked: true },
+      { value: "brown", label: "Brown", checked: false },
+      { value: "green", label: "Green", checked: false },
+      { value: "purple", label: "Purple", checked: false },
     ],
   },
   {
-    id: 'category',
-    name: 'Category',
+    id: "category",
+    name: "Category",
     options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
+      { value: "new-arrivals", label: "New Arrivals", checked: false },
+      { value: "sale", label: "Sale", checked: false },
+      { value: "travel", label: "Travel", checked: true },
+      { value: "organization", label: "Organization", checked: false },
+      { value: "accessories", label: "Accessories", checked: false },
     ],
   },
-  
-]
+];
 
-function classNames(...classes: any[]) {
-  return classes.filter(Boolean).join(' ')
-}
+type TSelectType = {
+  value: string;
+  label: string;
+};
+type TYearSelectType = {
+  value: number;
+  label: number;
+};
 
 const BikeManagement = () => {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const [cardMode, setCardMode] = useState('list'); 
-  const {data: bikes, isLoading, error} = useGetAllBikesQuery(null); 
-  
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [cardMode, setCardMode] = useState("list");
+  const { data: bikes, isLoading, error } = useGetAllBikesQuery(null);
+
+  const [models, setModels] = useState<TSelectType[]>([]);
+  const [brands, setBrands] = useState<TSelectType[]>([]);
+  const [years, setYears] = useState<TYearSelectType[]>([]);
+
+  useEffect(() => {
+    if (bikes?.data && bikes) {
+      const allBrand = bikes?.data?.reduce(
+        (acc: TSelectType[], item: TBike) => {
+          if (!acc.some((brand) => brand.value === item.brand)) {
+            acc.push({ value: item.brand, label: item.brand });
+          }
+          return acc;
+        },
+        []
+      );
+      const newBrand = [{ label: "All Brands", value: "all" }, ...allBrand];
+      setBrands(newBrand);
+      const allModels = bikes?.data?.reduce(
+        (acc: TSelectType[], item: TBike) => {
+          if (!acc.some((model) => model.value === item.model)) {
+            acc.push({ value: item.model, label: item.model });
+          }
+          return acc;
+        },
+        []
+      );
+      const newModels = [{ label: "All Models", value: "all" }, ...allModels];
+      setModels(newModels);
+      const allYears = bikes?.data?.reduce(
+        (acc: TYearSelectType[], item: TBike) => {
+          if (!acc.some((brand) => brand.value === item.year)) {
+            acc.push({ value: item.year, label: item.year });
+          }
+          return acc;
+        },
+        []
+      );
+      const newYears = [{ label: "All Years", value: "all" }, ...allYears];
+      setYears(newYears);
+    }
+  }, [bikes]);
+  const onChange = (value: string) => {
+    console.log(`selected ${value}`);
+  };
+
+  const onSearch = (value: string) => {
+    console.log("search:", value);
+  };
 
   return (
     <div className="">
       {isLoading && <GlobalLoader />}
-            
-      <div className='dark:bg-gray-900 dark:text-white text-gray-900 bg-white bg-opacity-25 '>
+
+      <div className="dark:bg-gray-900 dark:text-white text-gray-900 bg-white bg-opacity-25 ">
         {/* Mobile filter dialog */}
-        <Dialog open={mobileFiltersOpen} onClose={setMobileFiltersOpen} className="relative z-40 lg:hidden">
+        <Dialog
+          open={mobileFiltersOpen}
+          onClose={setMobileFiltersOpen}
+          className="relative z-40 lg:hidden"
+        >
           <DialogBackdrop
             transition
             className="fixed inset-0 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
@@ -101,7 +165,9 @@ const BikeManagement = () => {
               className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
             >
               <div className="flex items-center justify-between px-4">
-                <h2 className="text-lg font-medium text-gray-900 dark:text-white">Filters</h2>
+                <h2 className="text-lg font-medium text-gray-900 dark:text-white">
+                  Filters
+                </h2>
                 <button
                   type="button"
                   onClick={() => setMobileFiltersOpen(false)}
@@ -113,8 +179,10 @@ const BikeManagement = () => {
               </div>
 
               {/* Filters */}
-              <form className="mt-4 border-t border-gray-200">
-                <h3 className="sr-only text-gray-400 dark:text-white">Categories</h3>
+              {/* <form className="mt-4 border-t border-gray-200">
+                <h3 className="sr-only text-gray-400 dark:text-white">
+                  Categories
+                </h3>
                 <ul role="list" className="px-2 py-3 font-medium text-gray-900">
                   {subCategories.map((category) => (
                     <li key={category.name}>
@@ -126,13 +194,25 @@ const BikeManagement = () => {
                 </ul>
 
                 {filters.map((section) => (
-                  <Disclosure key={section.id} as="div" className="border-t border-gray-200 px-4 py-6">
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className="border-t border-gray-200 px-4 py-6"
+                  >
                     <h3 className="-mx-2 -my-3 flow-root">
                       <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">{section.name}</span>
+                        <span className="font-medium text-gray-900">
+                          {section.name}
+                        </span>
                         <span className="ml-6 flex items-center">
-                          <PlusIcon aria-hidden="true" className="h-5 w-5 group-data-[open]:hidden" />
-                          <MinusIcon aria-hidden="true" className="h-5 w-5 [.group:not([data-open])_&]:hidden" />
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 group-data-[open]:hidden"
+                          />
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                          />
                         </span>
                       </DisclosureButton>
                     </h3>
@@ -160,17 +240,75 @@ const BikeManagement = () => {
                     </DisclosurePanel>
                   </Disclosure>
                 ))}
-              </form>
+              </form> */}
+              <div className="grid gird-cols-1 px-4">
+                <div className="mt-5">
+                  <p className="font-semibold  pb-2">All Brands</p>
+                  <Select
+                    mode="multiple"
+                    showSearch
+                    placeholder="Select A Model"
+                    defaultValue="all"
+                    optionFilterProp="label"
+                    className="w-full "
+                    onChange={onChange}
+                    onSearch={onSearch}
+                    options={brands}
+                  />
+                </div>
+                <div className="mt-5">
+                  <p className="font-semibold  pb-2">All Models</p>
+
+                  <Select
+                    mode="multiple"
+                    showSearch
+                    placeholder="Select A Brand"
+                    defaultValue="all"
+                    optionFilterProp="label"
+                    className="w-full "
+                    onChange={onChange}
+                    onSearch={onSearch}
+                    options={models}
+                  />
+                </div>
+                <div className="mt-5">
+                  <p className="font-semibold  pb-2">All Years</p>
+
+                  <Select
+                    mode="multiple"
+                    showSearch
+                    placeholder="Select A Year"
+                    defaultValue="all"
+                    className="w-full h-10"
+                    optionFilterProp="label"
+                    onChange={onChange}
+                    onSearch={onSearch}
+                    options={years}
+                  />
+                </div>
+              </div>
             </DialogPanel>
           </div>
         </Dialog>
 
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+          {/* Search Button */}
+          <div className="parent mt-[60px] flex flex-col sm:flex-row items-center max-w-xl mx-auto justify-center gap-y-4 sm:justify-between pr-2 sm:pr-1 sm:bg-white rounded-full relative group sm:border border-transparent sm:border-indigo-600 focus-within:border-indigo-600">
+            <input
+              type="text"
+              className="block w-full px-6 py-3.5 text-base max-sm:text-center font-normal shadow-xs max-sm:bg-white text-gray-900 bg-transparent rounded-full placeholder-gray-400 focus:outline-none leading-normal border border-indigo-600 sm:border-none"
+              placeholder="Enter A Bike name "
+            />
+            <button className="py-3 px-6 max-sm:w-full  rounded-full bg-indigo-600 text-white text-sm leading-4 font-medium whitespace-nowrap transition-all duration-300 hover:bg-indigo-700 sm:absolute top-1.5 right-3">
+              Search Bike
+            </button>
+          </div>
+
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-8 pb-5 ">
             <h1 className="text-xl font-bold tracking-tight">Bike List</h1>
 
             <div className="flex items-center">
-              <Menu as="div" className="relative inline-block text-left">
+              {/* <Menu as="div" className="relative inline-block text-left">
                 <div>
                   <MenuButton className="group inline-flex justify-center text-sm font-medium text-gray-700 dark:text-white/75 hover:text-gray-900">
                     Sort
@@ -201,13 +339,33 @@ const BikeManagement = () => {
                     ))}
                   </div>
                 </MenuItems>
-              </Menu>
-
-              <button onClick={()=>setCardMode('square')} type="button" className="-m-2 ml-5  hover:text-gray-500 ">
+              </Menu> */}
+              <div className="flex  flex-row justify-center items-center">
+                <p className="font-semibold me-2">Sort</p>
+                <Select
+                  showSearch
+                  placeholder="Select A Model"
+                  defaultValue="all"
+                  optionFilterProp="label"
+                  className="w-40"
+                  // onChange={onChange}
+                  // onSearch={onSearch}
+                  options={sortOptions}
+                />
+              </div>
+              <button
+                onClick={() => setCardMode("square")}
+                type="button"
+                className="-m-2 ml-5  hover:text-gray-500 "
+              >
                 <span className="sr-only">View grid</span>
                 <Squares2X2Icon aria-hidden="true" className="h-5 w-5" />
               </button>
-              <button onClick={()=>setCardMode('list')} type="button" className="    hover:text-gray-500 ml-7">
+              <button
+                onClick={() => setCardMode("list")}
+                type="button"
+                className="    hover:text-gray-500 ml-7"
+              >
                 <span className="sr-only">View grid</span>
                 <AlignJustify className="h-6 w-6 font-bold " />
               </button>
@@ -225,12 +383,92 @@ const BikeManagement = () => {
 
           <section aria-labelledby="products-heading" className="pb-24 pt-6">
             <h2 id="products-heading" className="sr-only">
-              Products
+              Bikes
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block">
+              <div className="hidden lg:block">
+                {/* <SearchField></SearchField> */}
+                <div className="grid gird-cols-1 ">
+                  <div className="mt-5">
+                    <p className="font-semibold  pb-2">All Brands</p>
+                    <Select
+                      mode="multiple"
+                      showSearch
+                      placeholder="Select A Model"
+                      defaultValue="all"
+                      optionFilterProp="label"
+                      className="w-full "
+                      onChange={onChange}
+                      onSearch={onSearch}
+                      options={brands}
+                    />
+                  </div>
+                  <div className="mt-5">
+                    <p className="font-semibold  pb-2">All Models</p>
+
+                    <Select
+                      mode="multiple"
+                      showSearch
+                      placeholder="Select A Brand"
+                      defaultValue="all"
+                      optionFilterProp="label"
+                      className="w-full "
+                      onChange={onChange}
+                      onSearch={onSearch}
+                      options={models}
+                    />
+                  </div>
+                  <div className="mt-5">
+                    <p className="font-semibold  pb-2">All Years</p>
+
+                    <Select
+                      mode="multiple"
+                      showSearch
+                      placeholder="Select A Year"
+                      defaultValue="all"
+                      className="w-full h-10"
+                      optionFilterProp="label"
+                      onChange={onChange}
+                      onSearch={onSearch}
+                      options={years}
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-10 ">
+                  <p className="text-2xl font-semibold">Want A Discount</p>
+                  <div className="border border-red-500 w-[50%] mt-1"></div>
+                  <div>
+                    
+                  </div>
+                </div>
+
+                <div className="mt-5">
+                  <p className="text-2xl font-semibold">Contact Us</p>
+                  <div className="border border-red-500 w-[30%] mt-1"></div>
+                  <div>
+                    <div className="flex justify-start items-center">
+                      <MapPinHouse />
+                      <div className="ms-2">
+                        <p className="text-lg">Address</p>
+                        <p>New York, NY 10012, US</p>
+                      </div>
+                    </div>
+                    <div className="flex justify-start items-center">
+                    <Phone />
+                      <div className="ms-2">
+                        <p className="text-lg">Phone</p>
+                        <p>01886547654</p>
+                      </div>
+                    </div>
+                   
+                  </div>
+                </div>
+              </div>
+
+              {/* <form className="hidden lg:block">
                 <h3 className="sr-only">Categories</h3>
                 <ul role="list" className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium ">
                   {subCategories.map((category) => (
@@ -272,40 +510,33 @@ const BikeManagement = () => {
                     </DisclosurePanel>
                   </Disclosure>
                 ))}
-              </form>
+              </form> */}
 
               {/* Product grid */}
               <div className="lg:col-span-3">
-                
                 {/* <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16"> */}
-                  {
-                    cardMode==='list' ? 
-                    <div className="grid grid-cols-1 gap-y-5">
-                      {
-                        bikes?.data?.map( (item: TBike)=>(
-                          <BikeCard2 item={item}></BikeCard2>
-                        ))
-                      }
-                    </div>
-                    : 
-                    <div className="grid grid-cols-1  sm:grid-cols-2 gap-10">
-                      {
-                        bikes?.data?.map( (item: TBike)=>(
-                          <BikeCard1 item={item}></BikeCard1>
-                        ))
-                      }
-                    </div>
-                  }
-                  
-                {/* </div> */}
+                {cardMode === "list" ? (
+                  <div className="grid grid-cols-1 gap-y-5">
+                    {bikes?.data?.map((item: TBike) => (
+                      <BikeCard2 item={item}></BikeCard2>
+                    ))}
+                  </div>
+                ) : (
+                  <div className="grid grid-cols-1  sm:grid-cols-2 gap-10">
+                    {bikes?.data?.map((item: TBike) => (
+                      <BikeCard1 item={item}></BikeCard1>
+                    ))}
+                  </div>
+                )}
 
+                {/* </div> */}
               </div>
             </div>
           </section>
         </main>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default BikeManagement;
