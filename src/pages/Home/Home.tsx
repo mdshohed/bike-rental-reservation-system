@@ -29,6 +29,7 @@ const Home = () => {
   
   return (
     <div className="bg-gray-100">
+
       <Banner></Banner>
       <AvailableBikes></AvailableBikes>
       <WhyChooseUs></WhyChooseUs>

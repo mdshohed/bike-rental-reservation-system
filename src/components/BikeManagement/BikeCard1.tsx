@@ -12,7 +12,7 @@ const BikeCard1 = ({item}: {item: TBike}) => {
   return (
     <div className="border-r border-b border-l dark:text-white border-gray-400 lg:border-t lg:border-gray-400 bg-white dark:bg-gray-700 rounded-b-lg lg:rounded-b-lg lg:rounded-r flex flex-col justify-between leading-normal">
       <img
-        src="https://i0.wp.com/tvsabl.com/wp-content/uploads/2022/03/1-1.jpg?resize=825%2C483&ssl=1"
+        src={item?.image ? item?.image : "https://tvsabl.com/wp-content/uploads/2022/03/01-STRIKING-RED-1-e1648041783108.png"}
         className="w-full mb-3"
       />
       <div className="p-4 pt-2">

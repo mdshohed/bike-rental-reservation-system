@@ -9,7 +9,7 @@ const AboutUs = () => {
           <div className="grid grid-cols-1  dark:border-gray-700 md:grid-cols-3 gap-8">
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRiNdz8jPwkXu13MVZtydnXpqNs0CUE4acH_w&s"
+                src="https://www.revzilla.com/blog_content_image/image/43323/hero/Hero_5.jpg"
                 alt="wheat flour grinding"
                 className="w-full h-64 object-cover"
               />
@@ -26,7 +26,7 @@ const AboutUs = () => {
             </div>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <img
-                src="https://media.istockphoto.com/id/1193905579/photo/employee-at-a-bio-grocery-shop-helping-a-customer.jpg?s=612x612&w=0&k=20&c=XUmLNBdnGujox2ANqoqOD_8n_Y08mgzMkg4TbD4GhjY="
+                src="https://agvsport.com/wp-content/uploads/2022/11/cover-AGVSPORT-office-Motorcycle-Industry-Consulting-AGVSPORT.COM-29_20_11zon.jpg"
                 alt="Coffee"
                 className="w-full h-64 object-cover"
               />
@@ -43,7 +43,7 @@ const AboutUs = () => {
             </div>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <img
-                src="https://media.istockphoto.com/id/1280366064/photo/above-table-top-view-of-female-warehouse-worker-or-seller-packing-ecommerce-shipping-order.jpg?s=612x612&w=0&k=20&c=4d0ALB-3hOLJ_L-IZGvrjc6fqdmWZw2KrFp6fvNBlKo="
+                src="https://mcn-images.bauersecure.com/wp-images/59154/615x405/monster_797.jpg"
                 alt="Coffee"
                 className="w-full h-64 object-cover"
               />
@@ -60,7 +60,7 @@ const AboutUs = () => {
             </div>
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <img
-                src="https://c8.alamy.com/comp/M0XPAR/customer-service-desk-that-handles-returns-and-complaints-in-a-publix-M0XPAR.jpg"
+                src="https://motorepublic.com/wp-content/uploads/2020/03/lobby_1_875_v3.jpg"
                 alt="Coffee"
                 className="w-full h-64 object-cover"
               />
@@ -78,7 +78,7 @@ const AboutUs = () => {
 
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg bg-gradient-to-tr from-pink-300 to-blue-300 p-0.5 shadow-lg overflow-hidden min-h-full">
               <img
-                src="https://media.istockphoto.com/id/486140240/photo/football-fans-cheer-for-their-team-during-sports-event-stadium.jpg?s=612x612&w=0&k=20&c=okEVLKoPYDIQye6w7kRun6cvRw4gOENJfmtdlHnCcbM="
+                src="https://cdn.prod.website-files.com/6373e9fcb5b663ca18307076/642057fd9a708b328ca4ba09_640fa2a5d6afb7c608d46e82_motorcycle-events-new%2520(1).jpeg"
                 alt="Coffee"
                 className="w-full h-64 object-cover rounded-t-lg"
               />
@@ -96,7 +96,7 @@ const AboutUs = () => {
 
             <div className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md overflow-hidden">
               <img
-                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTRFoDW8eZybV4dXXwOB1Y2I5feVJ4IXHeHmw&s"
+                src="https://fastercapital.com/i/Motorcycle-Sustainability-Initiative--How-Motorcycle-Sustainability-Drives-Innovation-in-Business--Challenges-and-Opportunities-in-Motorcycle-Sustainability.webp"
                 alt="papad"
                 className="w-full h-64 object-cover"
               />
@@ -119,9 +119,7 @@ const AboutUs = () => {
         <div className="container mx-auto py-16 px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-2 items-center gap-8">
             <div className="max-w-lg">
-              <h2 className="text-3xl font-bold  mb-8 text-center">
-                About Us
-              </h2>
+              <h2 className="text-3xl font-bold  mb-8 text-center">About Us</h2>
               <p className="mt-4  text-lg">
                 Welcome to Amr-Sporting-Shop, where our passion for sports meets
                 a commitment to quality and community. Founded in 2024, we
@@ -137,7 +135,7 @@ const AboutUs = () => {
             </div>
             <div className="mt-12 md:mt-0">
               <img
-                src="https://costar.brightspotcdn.com/dims4/default/1b55774/2147483647/strip/true/crop/1280x712+0+0/resize/1280x712!/quality/100/?url=http%3A%2F%2Fcostar-brightspot.s3.us-east-1.amazonaws.com%2F40%2Fc6%2F3fdeedd44b4c9b96fa850363ae5a%2Fhos-min-footwear-deck.png"
+                src="https://images.medialinksonline.com/1439635x560x371xFFFFFFxEXTRA.jpg"
                 alt="About Us Image"
                 className="object-cover rounded-lg shadow-md"
               />
@@ -171,13 +169,13 @@ const AboutUs = () => {
                   <a>Bonnie Green</a>
                 </h3>
                 <span className="text-gray-500 dark:text-gray-400">
-                  Sales Specialist
+                  Bike Rental Specialist
                 </span>
                 <p className="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">
-                  An avid runner and cyclist, Emily brings a wealth of product
-                  knowledge to the team. She loves helping customers discover
-                  the best equipment to enhance their performance and enjoyment
-                  of their favorite sports.
+                  As an experienced cyclist and bike enthusiast, Liam is
+                  passionate about matching riders with the perfect bike. His
+                  extensive knowledge of different bike models ensures that
+                  customers get a ride tailored to their needs.
                 </p>
                 <ul className="flex space-x-4 sm:mt-0">
                   <li>
@@ -253,16 +251,16 @@ const AboutUs = () => {
               </a>
               <div className="p-5">
                 <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  <a>Jese Leos</a>
+                  <a>Emma Davis</a>
                 </h3>
                 <span className="text-gray-500 dark:text-gray-400">
-                  Product Expert
+                  Customer Support Expert
                 </span>
                 <p className="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">
-                  With a background in sports science, Marcus specializes in
-                  athletic gear and footwear. He’s dedicated to educating
-                  customers about the latest technologies to improve their game
-                  and keep them safe while doing what they love.
+                  Emma’s dedication to customer satisfaction makes her the go-to
+                  person for any rental-related questions. Whether it's
+                  troubleshooting or helping with bike selections, she ensures a
+                  smooth and enjoyable experience for all customers.
                 </p>
                 <ul className="flex space-x-4 sm:mt-0">
                   <li>
@@ -338,15 +336,16 @@ const AboutUs = () => {
               </a>
               <div className="p-5">
                 <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  <a>Michael Gough</a>
+                  <a>Noah Johnson</a>
                 </h3>
                 <span className="text-gray-500 dark:text-gray-400">
-                  Product Expert
+                  Mechanical Specialist
                 </span>
                 <p className="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">
-                  He’s dedicated to educating customers about the latest
-                  technologies to improve their game and keep them safe while
-                  doing what they love.
+                  With years of experience in bike mechanics, Noah is
+                  responsible for maintaining and fine-tuning our fleet. His
+                  expertise ensures that all bikes are in peak condition for a
+                  safe and thrilling ride.
                 </p>
                 <ul className="flex space-x-4 sm:mt-0">
                   <li>
@@ -422,16 +421,16 @@ const AboutUs = () => {
               </a>
               <div className="p-5">
                 <h3 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
-                  <a>Lana Byrd</a>
+                  <a>Sophia Ramirez</a>
                 </h3>
                 <span className="text-gray-500 dark:text-gray-400">
-                  Customer Service Representative
+                  Tour Guide & Rental Consultant
                 </span>
                 <p className="mt-3 mb-4 font-light text-gray-500 dark:text-gray-400">
-                  Sophie is the friendly face of our store, always ready to
-                  assist. With a deep understanding of our products, she strives
-                  to create a welcoming environment for everyone who walks
-                  through our doors.
+                  Sophia brings a passion for adventure and local knowledge to
+                  the team. Whether recommending scenic routes or helping choose
+                  the best rental option, she’s always ready to enhance the
+                  riding experience for our clients.
                 </p>
                 <ul className="flex space-x-4 sm:mt-0">
                   <li>
@@ -507,9 +506,7 @@ const AboutUs = () => {
             <h2 className="text-3xl font-bold " id="contactUs">
               Visit Our Location
             </h2>
-            <p className="mt-3 text-lg ">
-              Let us serve you the best
-            </p>
+            <p className="mt-3 text-lg ">Let us serve you the best</p>
           </div>
           <div className="mt-8 lg:mt-20">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -543,9 +540,7 @@ const AboutUs = () => {
                     </a>
                   </div>
                   <div className="px-6 py-4">
-                    <h3 className="text-lg font-medium ">
-                      Our Address
-                    </h3>
+                    <h3 className="text-lg font-medium ">Our Address</h3>
                     <p className="mt-1 ">
                       1230 Maecenas Street Donec Road New York, EEUU
                     </p>

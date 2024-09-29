@@ -27,7 +27,7 @@ import {
 import { toast } from "sonner";
 import TextArea from "antd/es/input/TextArea";
 import SearchField from "@/components/ui/search/SearchField";
-
+import { imageUpload } from "@/utils/uploadImage";
 
 const ManageBike: React.FC = () => {
   const { data: bikes, isLoading } = useGetAllBikesQuery(null);
@@ -36,6 +36,7 @@ const ManageBike: React.FC = () => {
   const [updateBike] = useUpdateBikeMutation();
   const [form] = Form.useForm();
   const [updateFrom] = Form.useForm();
+  const [isAddVisible, setIsAddVisible] = useState(false);
   const [isUpdateModalVisible, setIsUpdateModalVisible] = useState(false);
   const [currentBike, setCurrentBike] = useState<TBike>({} as TBike);
   // const [filteredInfo, setFilteredInfo] = useState<Filters>({});
@@ -115,6 +116,10 @@ const ManageBike: React.FC = () => {
       console.log("Form values:", values);
 
       const toastId = toast.loading("Loading...");
+
+      const img = values.upload[0].originFileObj as File;
+      const image_url = await imageUpload(img);
+
       const payload = {
         name: values.name,
         brand: values.brand,
@@ -123,8 +128,8 @@ const ManageBike: React.FC = () => {
         pricePerHour: parseFloat(values.pricePerHour),
         year: parseFloat(values.year),
         description: values.description,
+        image: image_url,
       };
-      const img = values.upload;
       console.log("Image file:", img);
 
       const res = await addBike(payload).unwrap();
@@ -137,6 +142,7 @@ const ManageBike: React.FC = () => {
       } else {
         toast.error("Bike Added Error!", { duration: 1000 });
       }
+      setIsAddVisible(false)
       form.resetFields();
       // Modal.destroyAll();
     } catch (errorInfo) {
@@ -156,6 +162,8 @@ const ManageBike: React.FC = () => {
 
     try {
       const values = await updateFrom.validateFields();
+      const img = values.upload[0].originFileObj as File;
+      const image_url = await imageUpload(img);
       const payload = {
         name: values.name,
         brand: values.brand,
@@ -164,7 +172,10 @@ const ManageBike: React.FC = () => {
         pricePerHour: parseFloat(values.pricePerHour),
         year: parseFloat(values.year),
         description: values.description,
+        image: image_url,
       };
+
+      // payload.image = image_url;
 
       const res = await updateBike({
         id: currentBike?._id,
@@ -192,13 +203,20 @@ const ManageBike: React.FC = () => {
       dataIndex: "name",
       key: "name",
       render: (_, render) => (
-        <div>
-          <p className="text-md font-bold">{render.name}</p>
-          <p>
-            {render.description.length > 15
-              ? `${render.description.substring(0, 15)}...`
-              : render.description}
-          </p>{" "}
+        <div className="flex justify-start items-center">
+          <img
+            className="w-8 h-8 rounded-full me-3"
+            src={render.image}
+            alt=""
+          />
+          <div>
+            <p className="text-md font-bold">{render.name}</p>
+            <p>
+              {render.description.length > 15
+                ? `${render.description.substring(0, 15)}...`
+                : render.description}
+            </p>{" "}
+          </div>
         </div>
       ),
     },
@@ -228,10 +246,16 @@ const ManageBike: React.FC = () => {
       dataIndex: "isAvailable",
       key: "isAvailable",
       render: (_, record) => (
-        <div 
+        <div
         // onClick={() => handleStatusChange(record)}
         >
-          <p className={`text-white w-10 text-center  rounded-md ${record.isAvailable ? 'bg-green-500' : 'bg-gray-500'}`}>{ record.isAvailable ? "Yes" : "No"}</p>
+          <p
+            className={`text-white w-10 text-center  rounded-md ${
+              record.isAvailable ? "bg-green-500" : "bg-gray-500"
+            }`}
+          >
+            {record.isAvailable ? "Yes" : "No"}
+          </p>
         </div>
       ),
     },
@@ -279,164 +303,157 @@ const ManageBike: React.FC = () => {
           <div className="me-4 sm:me-10">
             <Button
               type="primary"
-              onClick={() => {
-                Modal.confirm({
-                  title: "Add Product",
-                  icon: null,
-                  width: 550,
-                  content: (
-                    <Form form={form} layout="vertical">
-                      <Row gutter={16}>
-                        <Col span={12}>
-                          <Form.Item
-                            name="name"
-                            label="Bike Name"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please enter the Bike Name",
-                              },
-                            ]}
-                          >
-                            <Input placeholder="Enter bike name" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                          <Form.Item
-                            name="brand"
-                            label="Brand name"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please enter the Brand Name",
-                              },
-                            ]}
-                          >
-                            <Input placeholder="Enter Brand Name" />
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                      <Row gutter={16}>
-                        <Col span={12}>
-                          <Form.Item
-                            name="model"
-                            label="Model Name"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please enter the model",
-                              },
-                            ]}
-                          >
-                            <Input placeholder="Enter Model" />
-                          </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                          <Form.Item
-                            name="cc"
-                            label="Engine Capacity(CC)"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please enter the Engine Capacity",
-                              },
-                            ]}
-                          >
-                            <Input
-                              type="number"
-                              min={0}
-                              placeholder="Enter Engine Capacity"
-                            />
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                      <Row gutter={16}>
-                        <Col span={12}>
-                          <Form.Item
-                            name="pricePerHour"
-                            label="Price Per Hour"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please enter the Price Per Hour",
-                              },
-                            ]}
-                          >
-                            <Input
-                              type="number"
-                              min={0}
-                              placeholder="Enter Price Per Hour"
-                            />
-                          </Form.Item>
-                        </Col>
-                        <Col span={12}>
-                          <Form.Item
-                            name="year"
-                            label="year"
-                            rules={[
-                              {
-                                required: true,
-                                message: "Please enter the Year",
-                              },
-                            ]}
-                          >
-                            <Input
-                              type="number"
-                              min={0}
-                              placeholder="Enter Year"
-                            />
-                          </Form.Item>
-                        </Col>
-                      </Row>
-                      <Form.Item
-                        name="description"
-                        label="description"
-                        rules={[
-                          {
-                            required: true,
-                            message: "Please enter the description",
-                          },
-                        ]}
-                      >
-                        <TextArea
-                          autoSize={{ minRows: 2, maxRows: 3 }}
-                          placeholder="Enter description"
-                        />
-                      </Form.Item>
-
-                      <Form.Item
-                        name="upload"
-                        label="Upload Product Image"
-                        valuePropName="fileList"
-                        getValueFromEvent={(e) => e?.fileList}
-                      >
-                        <Upload
-                          listType="picture"
-                          maxCount={1}
-                          beforeUpload={() => false} // Prevent automatic upload, handle manually on submit
-                          // onChange={handleUploadChange}
-                        >
-                          <Button icon={<UploadOutlined />}>
-                            Select Image
-                          </Button>
-                        </Upload>
-                      </Form.Item>
-                      {/* </Row> */}
-                    </Form>
-                  ),
-                  footer: (_, { CancelBtn }) => (
-                    <>
-                      <CancelBtn />
-                      <Button type="primary" onClick={handleAddBike}>
-                        Add Product
-                      </Button>
-                    </>
-                  ),
-                });
-              }}
+              onClick={() => setIsAddVisible(true)}
             >
               Add Product
             </Button>
+
+            <Modal
+              title="Update Bike"
+              visible={isAddVisible}
+              onCancel={() => setIsAddVisible(false)}
+              footer={[
+                <Button key="cancel" onClick={() => setIsAddVisible(false)}>
+                  Cancel
+                </Button>,
+                <Button key="submit" type="primary" onClick={handleAddBike}>
+                  Submit
+                </Button>,
+              ]}
+            >
+              <Form form={form} layout="vertical">
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item
+                      name="name"
+                      label="Bike Name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter the Bike Name",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter bike name" />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      name="brand"
+                      label="Brand name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter the Brand Name",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter Brand Name" />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item
+                      name="model"
+                      label="Model Name"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter the model",
+                        },
+                      ]}
+                    >
+                      <Input placeholder="Enter Model" />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      name="cc"
+                      label="Engine Capacity(CC)"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter the Engine Capacity",
+                        },
+                      ]}
+                    >
+                      <Input
+                        type="number"
+                        min={0}
+                        placeholder="Enter Engine Capacity"
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row gutter={16}>
+                  <Col span={12}>
+                    <Form.Item
+                      name="pricePerHour"
+                      label="Price Per Hour"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter the Price Per Hour",
+                        },
+                      ]}
+                    >
+                      <Input
+                        type="number"
+                        min={0}
+                        placeholder="Enter Price Per Hour"
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      name="year"
+                      label="year"
+                      rules={[
+                        {
+                          required: true,
+                          message: "Please enter the Year",
+                        },
+                      ]}
+                    >
+                      <Input type="number" min={0} placeholder="Enter Year" />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Form.Item
+                  name="description"
+                  label="description"
+                  rules={[
+                    {
+                      required: true,
+                      message: "Please enter the description",
+                    },
+                  ]}
+                >
+                  <TextArea
+                    autoSize={{ minRows: 2, maxRows: 3 }}
+                    placeholder="Enter description"
+                  />
+                </Form.Item>
+
+                <Form.Item
+                  name="upload"
+                  label="Upload Product Image"
+                  valuePropName="fileList"
+                  getValueFromEvent={(e) => e?.fileList}
+                >
+                  <Upload
+                    listType="picture"
+                    maxCount={1}
+                    beforeUpload={() => false}
+                    // onChange={handleUploadChange}
+                  >
+                    <Button icon={<UploadOutlined />}>Select Image</Button>
+                  </Upload>
+                </Form.Item>
+                {/* </Row> */}
+              </Form>
+            </Modal>
           </div>
         </div>
       </div>

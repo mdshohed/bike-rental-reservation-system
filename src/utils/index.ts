@@ -23,4 +23,5 @@ export interface TBike {
   percentageOff?: number;
   model: string;
   brand: string;
+  image?: string
 }

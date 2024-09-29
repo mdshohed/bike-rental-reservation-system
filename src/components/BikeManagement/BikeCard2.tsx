@@ -13,7 +13,8 @@ const BikeCard2 = ({item}: {item: TBike}) => {
       <div className="relative flex flex-col sm:flex-row sm:space-x-5 space-y-3 sm:space-y-0 rounded-md border dark:border-gray-700 shadow-sm bg-gray-50 dark:bg-gray-800 ">
         <div className="w-full sm:w-1/3  grid place-items-center">
           <img
-            src="https://tvsabl.com/wp-content/uploads/2022/03/01-STRIKING-RED-1-e1648041783108.png"
+            src={item?.image ? item?.image : "https://tvsabl.com/wp-content/uploads/2022/03/01-STRIKING-RED-1-e1648041783108.png"}
+
             alt="tailwind logo"
             className="rounded-sm  max-h-60 "
           />
