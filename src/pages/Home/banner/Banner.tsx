@@ -35,7 +35,7 @@ export function Banner() {
       image: sliderImage3,
       title: 'Conquer Every Challenge', 
       description: 'On orders over $100. Get your gear delivered to your door!',
-      discount:'Free Shipping '
+      discount:'Free Rental Service From Expert'
     },
     {
       id: 4,
