@@ -28,7 +28,7 @@ export function Banner() {
       image: sliderImage2,
       title: 'Play Like a Pro', 
       description: 'On selected sports apparel and accessories. Limited time offer!',
-      discount:'Buy 1, Get 1 Free '
+      discount:'Booking Bike and Save Money '
     },
     {
       id: 3,
@@ -41,8 +41,8 @@ export function Banner() {
       id: 4,
       image: sliderImage4,
       title: 'Train Hard, Play Hard', 
-      description: 'Be the first to grab the latest sports equipment and save!',
-      discount:'20% Off New Arrivals'
+      description: 'Be the first to grab the latest Bike and save!',
+      discount:'20% Off New Rentals'
     },
   ];
 
