@@ -1,4 +1,4 @@
-import { useGetSingleBikesAndBikeStatusQuery, useGetSingleBikesQuery } from "@/redux/features/bikes/bikesApi";
+import {useGetSingleBikesQuery } from "@/redux/features/bikes/bikesApi";
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -11,7 +11,7 @@ dayjs.extend(buddhistEra);
 import { Description, Dialog, DialogPanel } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import GlobalLoader from "../ui/loaders/GlobalLoader";
-import { DatePicker, Modal, Select } from "antd";
+import { DatePicker, Modal } from "antd";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
@@ -55,7 +55,9 @@ const BikeView = () => {
 
   const handleNavigateToCheckout = () => {
     setIsOpen((e) => !e);
-    const selectedTime = new Date(selectedDate?.$d).toISOString();
+    // const selectedTime = new Date(selectedDate?.$d).toISOString();
+    const selectedTime = selectedDate?.toDate().toISOString();
+
     if (selectedTime) {
       const payload = {
         bookingId: id,

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Space, Table, Tag } from "antd";
+import { Space, Table } from "antd";
 import type { TableProps } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useGetAllRentalQuery } from "@/redux/features/rentalBike/rentalBikeApi";

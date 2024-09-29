@@ -1,5 +1,5 @@
-import { selectCurrentUser, useCurrentToken } from "@/redux/features/auth/authSlice";
-import { useAppSelector } from "@/redux/hooks";
+// import { selectCurrentUser, useCurrentToken } from "@/redux/features/auth/authSlice";
+// import { useAppSelector } from "@/redux/hooks";
 import { Drawer } from "antd";
 import React, { useState } from "react";
 import { MdMenu } from "react-icons/md";
@@ -8,8 +8,8 @@ import { NavLink } from "react-router-dom";
 
 const MobileNavbar: React.FC = () => {
   const [open, setOpen] = useState(false);
-  const user = useAppSelector(selectCurrentUser);
-  const token = useAppSelector(useCurrentToken);
+  // const user = useAppSelector(selectCurrentUser);
+  // const token = useAppSelector(useCurrentToken);
   const showDrawer = () => {
     setOpen(true);
   };

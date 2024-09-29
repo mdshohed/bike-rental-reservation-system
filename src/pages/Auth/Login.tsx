@@ -1,4 +1,4 @@
-import { FieldValues, useForm } from "react-hook-form";
+import { FieldValues } from "react-hook-form";
 import { useLoginMutation } from "../../redux/features/auth/authApi";
 import { useAppDispatch, useAppSelector } from "../../redux/hooks";
 import { selectCurrentUser, setUser, TUser, useCurrentToken } from "../../redux/features/auth/authSlice";
@@ -15,26 +15,9 @@ const Login = () => {
   if(token&&currentUser) {
     return <Navigate to={`/${currentUser.role}/dashboard`} replace={true}></Navigate>
   }
-  // const { register, handleSubmit } = useForm(
-  //   {
-  //     defaultValues: {
-  //       userId: 'A-0001',
-  //       password: '12345'
-  //     }
-  //   }
-  // );
-  // const { register } = useFormContext();
-  const defaultValues = {
-    userId: "A-0001",
-    password: "12345",
-  };
 
   const [login] = useLoginMutation();
 
-  // console.log("data => ", data);
-  // console.log("error => ", error);
-
-  // const [loginDetails, setLoginDetails] = useState<{email:string, password:string}>({email:'', password:''})
   const onSubmit = async (e: FieldValues) => {
     e.preventDefault();
     const form = e.target;

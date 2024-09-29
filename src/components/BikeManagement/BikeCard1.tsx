@@ -1,5 +1,5 @@
 import { TBike } from "@/utils";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const BikeCard1 = ({item}: {item: TBike}) => {
   const navigate = useNavigate(); 

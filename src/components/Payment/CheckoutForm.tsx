@@ -1,4 +1,4 @@
-import { useUpdateBikeMutation } from "@/redux/features/bikes/bikesApi";
+
 import { useGetAllCouponQuery } from "@/redux/features/coupon/couponApi";
 import { useAddPaymentMutation } from "@/redux/features/payment/stripeApi";
 import {
@@ -34,7 +34,7 @@ const CheckoutForm = () => {
   const [error, setError] = useState<string>("");
   const stripe = useStripe();
   const elements = useElements();
-  const [addPayment, { isError }] = useAddPaymentMutation();
+  const [addPayment] = useAddPaymentMutation();
 
   const [clientSecret, setClientSecret] = useState("");
   const [createRental] = useCreateRentalMutation();
@@ -80,7 +80,7 @@ const CheckoutForm = () => {
 
     const toastId = toast.loading("Rental Processing");
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });

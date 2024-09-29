@@ -15,7 +15,7 @@ const BookingProcess = () => {
   const bookingId = searchParams.get("bookingId");
   console.log({ bookingId });
 
-  let [isOpen, setIsOpen] = useState(true);
+  const [isOpen, setIsOpen] = useState(true);
 
   return (
     <ProtectedRoute>

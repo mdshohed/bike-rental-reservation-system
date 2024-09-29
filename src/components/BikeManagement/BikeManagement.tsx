@@ -44,7 +44,6 @@ const sortOptions = [
 type TSelectType = {
   value: string;
   label: string;
-  isTrue: boolean;
 };
 type TYearSelectType = {
   value: number;

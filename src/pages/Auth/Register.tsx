@@ -34,7 +34,7 @@ const Register = () => {
       });
     }
     try {
-      const res = await SignUp(register).unwrap();
+      await SignUp(register).unwrap();
 
       toast.success("Register Successful!", { id: toastId, duration: 2000 });
       navigate(`/login`);

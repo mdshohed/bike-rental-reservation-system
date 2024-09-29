@@ -1,18 +1,18 @@
-import GlobalLoader from "@/components/ui/loaders/GlobalLoader";
-import { useGetAllBikesQuery } from "@/redux/features/bikes/bikesApi";
-import { TBike } from "@/utils";
-import { Label } from "@headlessui/react";
-import { Select } from "antd";
-import { useEffect, useState } from "react";
+// import GlobalLoader from "@/components/ui/loaders/GlobalLoader";
+// import { useGetAllBikesQuery } from "@/redux/features/bikes/bikesApi";
+// import { TBike } from "@/utils";
+// import { Label } from "@headlessui/react";
+// import { Select } from "antd";
+// import { useEffect, useState } from "react";
 
-type TSelectType = {
-  value: string, 
-  label: string
-}
-type TYearSelectType = {
-  value: number, 
-  label: number
-}
+// type TSelectType = {
+//   value: string, 
+//   label: string
+// }
+// type TYearSelectType = {
+//   value: number, 
+//   label: number
+// }
 
 const SearchField = () => {
   // const [models, setModels] = useState<TSelectType[]>([])

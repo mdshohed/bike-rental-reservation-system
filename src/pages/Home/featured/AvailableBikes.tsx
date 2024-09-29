@@ -1,31 +1,29 @@
-import BikeCard1 from "@/components/BikeManagement/BikeCard1";
 import BikeCard2 from "@/components/BikeManagement/BikeCard2";
 import AnimatedBackground from "@/components/core/animated-background";
 import { useGetAllBikesQuery } from "@/redux/features/bikes/bikesApi";
 import { TBike } from "@/utils";
 import { useEffect, useState } from "react";
-import SearchField from "../search/SearchField";
+
 import { Empty } from "antd";
-import GlobalLoader from "@/components/ui/loaders/GlobalLoader";
+
 
 const AvailableBikes = () => {
-  const { data, isLoading, error } = useGetAllBikesQuery(null);
-  const [searchLoader, setSearLoader] = useState(false)
+  const { data } = useGetAllBikesQuery(null);
+  // const [setSearLoader] = useState(false)
   const [bikes, setBikes] = useState<TBike[]>([]);
   useEffect(() => {
     if (data?.data && data) {
       setBikes(data?.data)
     }
   }, [data]);
-  const [cardMode, setCardMode] = useState("list");
   
   const handleSearchBike = async(e: string) =>{
-    setSearLoader(true);
+    // setSearLoader(true);
    
     const newBikes = data?.data.filter( (item: TBike)=>item.name.toLowerCase().includes(e.toLowerCase().trim()));
     setBikes(newBikes); 
-    await new Promise((resolve) => setTimeout(resolve, 100));
-    setSearLoader(false) 
+    // await new Promise((resolve) => setTimeout(resolve, 100));
+    // setSearLoader(false) 
   }
 
   // if(isLoading||searchLoader){

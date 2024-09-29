@@ -7,7 +7,6 @@ import {
   Modal,
   Row,
   Space,
-  Switch,
   Table,
   Upload,
 } from "antd";
@@ -28,11 +27,7 @@ import {
 import { toast } from "sonner";
 import TextArea from "antd/es/input/TextArea";
 import SearchField from "@/components/ui/search/SearchField";
-type OnChange = NonNullable<TableProps<TBike>["onChange"]>;
-// type Filters = Parameters<OnChange>[1];
 
-type GetSingle<T> = T extends (infer U)[] ? U : never;
-// type Sorts = GetSingle<Parameters<OnChange>[2]>;
 
 const ManageBike: React.FC = () => {
   const { data: bikes, isLoading } = useGetAllBikesQuery(null);
@@ -429,7 +424,7 @@ const ManageBike: React.FC = () => {
                       {/* </Row> */}
                     </Form>
                   ),
-                  footer: (_, { OkBtn, CancelBtn }) => (
+                  footer: (_, { CancelBtn }) => (
                     <>
                       <CancelBtn />
                       <Button type="primary" onClick={handleAddBike}>

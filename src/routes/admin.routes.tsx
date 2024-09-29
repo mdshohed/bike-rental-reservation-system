@@ -4,8 +4,7 @@ import CouponManagement from "@/pages/admin/CouponManagement/CouponManagement";
 import UserProfile from "@/components/UserProfile/UserProfile";
 import ManageBike from "@/pages/admin/BikeManagement/ManageBike";
 import AdminDashboard from "@/pages/admin/AdminDashboard";
-import { DashboardOutlined, VideoCameraOutlined } from "@ant-design/icons";
-import { Bike, Gauge, Puzzle, ShoppingBasket, Undo2, UserCog, UserPen } from "lucide-react";
+import { Bike, Gauge, Puzzle, Undo2, UserCog, UserPen } from "lucide-react";
 
 
 export const adminPaths = [

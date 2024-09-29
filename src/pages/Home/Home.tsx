@@ -4,16 +4,8 @@ import AvailableBikes from "./featured/AvailableBikes";
 import Testimonials from "./testimonials/Testimonials";
 import ContactSection from "./contactUs/ContactSection";
 import Gamified from "./gamifiedFeature/Gamified";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { TCoupon } from "@/types/coupon";
-import { useGetAllBikesQuery } from "@/redux/features/bikes/bikesApi";
-import { useGetAllCouponQuery } from "@/redux/features/coupon/couponApi";
-
-type TSelectType = {
-  option: string;
-  couponCode: string;
-};
 
 const Home = () => {
   useEffect(() => {

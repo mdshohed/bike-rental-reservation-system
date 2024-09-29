@@ -8,7 +8,6 @@ import {
 import { TUser } from "@/utils";
 import { toast } from "sonner";
 import { timeDiff } from "@/utils/common";
-import create from "@ant-design/icons/lib/components/IconFont";
 import Swal from "sweetalert2";
 import SearchField from "@/components/ui/search/SearchField";
 
@@ -109,12 +108,7 @@ const UserList: React.FC = () => {
       dataIndex: "createdAt",
       key: "createdAt",
       render: (createdAt) => {
-        const memberSinceDate = new Date(createdAt);
-        const currentDate = new Date();
-        const diffTime = Math.abs(
-          currentDate.getTime() - memberSinceDate.getTime()
-        );
-        const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        // const diffDays = Math.floor(diffTime / (1000 * 60 * 60 * 24));
         return timeDiff(createdAt);
       },
     },

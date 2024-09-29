@@ -1,5 +1,4 @@
 import AnimatedBackground from "@/components/core/animated-background";
-import React from "react";
 
 const Featured = () => {
   return (

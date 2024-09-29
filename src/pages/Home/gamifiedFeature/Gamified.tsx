@@ -2,7 +2,7 @@ import { useGetAllCouponQuery } from "@/redux/features/coupon/couponApi";
 import { TCoupon } from "@/types/coupon";
 import { ArrowRightOutlined } from "@ant-design/icons";
 import { List } from "antd";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Wheel } from "react-custom-roulette";
 import Swal from "sweetalert2";
 
@@ -12,18 +12,17 @@ type TSelectType = {
 };
 
 const CouponsAndDiscounts = () => {
-  const { data: coupons, isLoading } = useGetAllCouponQuery(null);
+  const { data: coupons } = useGetAllCouponQuery(null);
   const [mustSpin, setMustSpin] = useState(false);
   const [prizeNumber, setPrizeNumber] = useState(0);
-  const [showCoupon, setShowCoupon] = useState(false);
+  // const [showCoupon, setShowCoupon] = useState(false);
   const [data, setCoupons] = useState<TSelectType[]>([
-    { option: "10% OFF", couponCode: "SAVE10" },
+    { option: "0%", couponCode: "SAVE10" },
   ]);
 
 
   useEffect(() => {
     if (coupons?.data && coupons) {
-      console.log("data", coupons?.data);
   
       const transformCoupons = coupons?.data.reduce(
         (acc: any[], item: TCoupon) => {
@@ -53,10 +52,10 @@ const CouponsAndDiscounts = () => {
     const newPrizeNumber = Math.floor(Math.random() * data.length);
     setPrizeNumber(newPrizeNumber);
     setMustSpin(true);
-    setShowCoupon(false);
+    // setShowCoupon(false);
   };
   const handleShowCouponCode = async (code: string) => {
-    const res = await Swal.fire({
+    await Swal.fire({
       title: "Congratulations!",
       html: `
         <div style="margin-top: 20px; padding: 15px; background-color: #f0fdf4; border: 1px solid #86efac; border-radius: 8px;">
@@ -102,7 +101,7 @@ const CouponsAndDiscounts = () => {
             perpendicularText
             onStopSpinning={() => {
               setMustSpin(false);
-              setShowCoupon(true);
+              // setShowCoupon(true);
               handleShowCouponCode(data[prizeNumber].couponCode);
             }}
           />

@@ -7,7 +7,7 @@ import {
 import CheckoutForm from './CheckoutForm';
 import ProtectedRoute from '../layout/ProtectedRoute';
 
-const id = import.meta.env.PAYMENT_GATEWAY_PK; 
+// const id = import.meta.env.PAYMENT_GATEWAY_PK; 
 // const stripePromise = loadStripe(import.meta.env.PAYMENT_GATEWAY_PK);
 const stripePromise = loadStripe('pk_test_51L2b0xGxIFJC1OANbUH0gPXgCXdBnKy2SywsHmIvnOGkad1XXygdKhQ4NaDIPGBIVUQdqiHcnsbF535d9yWJli1x00Uaf0y01h');
 

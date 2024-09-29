@@ -27,7 +27,7 @@ const CheckoutForm = () => {
   const [error, setError] = useState<string>("");
   const stripe = useStripe();
   const elements = useElements();
-  const [addPayment, { isError }] = useAddPaymentMutation();
+  const [addPayment] = useAddPaymentMutation();
 
   const [clientSecret, setClientSecret] = useState("");
   const [updateRental] = useUpdateRentalMutation();
@@ -69,7 +69,7 @@ const CheckoutForm = () => {
 
     const toastId = toast.loading("Rental Processing");
 
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
+    const { error } = await stripe.createPaymentMethod({
       type: "card",
       card,
     });

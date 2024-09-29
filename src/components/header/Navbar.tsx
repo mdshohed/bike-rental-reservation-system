@@ -94,9 +94,9 @@ import { useAppSelector } from "@/redux/hooks";
 import { Link, NavLink } from "react-router-dom";
 import MobileNavbar from "./MobileNavbar";
 import AvatarNav from "../ui/AvatarNav";
-import { BellIcon } from "lucide-react";
+
 import ThemeToggleButton from "@/pages/Shared/ThemeToggleButton";
-import { Avatar, Badge } from "antd";
+
 
 const Navbar = () => {
   const user = useAppSelector(selectCurrentUser);

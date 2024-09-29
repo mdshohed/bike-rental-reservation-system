@@ -4,10 +4,10 @@ import {
 } from "@/redux/features/user/userApi";
 import { TProfile } from "@/types/profile";
 import { timeDiff } from "@/utils/common";
-import { EditOutlined } from "@ant-design/icons";
+
 import { Clock6, Mail, MapPinHouse, Phone, UserRoundPen } from "lucide-react";
 import { useEffect, useState } from "react";
-import { useForm } from "react-hook-form";
+
 import { toast } from "sonner";
 
 const UserProfile = () => {
