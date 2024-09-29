@@ -29,7 +29,7 @@ const Login = () => {
     password: "12345",
   };
 
-  const [login, { data, error }] = useLoginMutation();
+  const [login] = useLoginMutation();
 
   // console.log("data => ", data);
   // console.log("error => ", error);

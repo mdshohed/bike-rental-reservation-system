@@ -61,17 +61,13 @@
 
 import React, { useState } from "react";
 import {
-  ArrowRightOutlined,
-  DownOutlined,
   LaptopOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   NotificationOutlined,
-  SettingOutlined,
   UserOutlined,
-  VideoCameraOutlined,
 } from "@ant-design/icons";
-import { Avatar, Breadcrumb, Button, Dropdown, MenuProps, Layout, Menu, Space, theme } from "antd";
+import {  Breadcrumb, Button, MenuProps, Layout, Menu, Space, theme } from "antd";
 
 import Sidebar from "./Sidebar";
 // import Menu as MenuHeadless from ''
@@ -80,8 +76,9 @@ import { Link, Outlet } from "react-router-dom";
 import ThemeToggleButton from "@/pages/Shared/ThemeToggleButton";
 import { BellIcon } from "lucide-react";
 import AvatarNav from "../ui/AvatarNav";
+import logo from '../../assets/logo/bike-zone-2.png'
 
-const { Header, Sider, Content } = Layout;
+const { Header, Content } = Layout;
 
 const MainLayout: React.FC = () => {
 
@@ -115,9 +112,12 @@ const MainLayout: React.FC = () => {
   });
   return (
     <Layout style={{ minHeight: "100vh" }}>
-      <Header className="">
-        <div className="demo-logo" />
-        <Menu
+      <Header className="flex justify-between items-center">
+      <div className="w-24 ">
+        <img src={logo} alt="" />
+      </div>
+        <div>
+          <Menu
           theme="dark"
           mode="horizontal"
           className="justify-end"
@@ -144,11 +144,10 @@ const MainLayout: React.FC = () => {
           </Menu.Item>
           <Menu.Item style={{ backgroundColor: "transparent" , display:"flex", justifyItems:'center', alignItems:'center'}}>
             <AvatarNav></AvatarNav>
-            {/* <div>
-              <Button onClick={handleLogout}>LogOut</Button>
-            </div> */}
           </Menu.Item>
         </Menu>
+        </div>
+        
       </Header>
 
       <Layout>

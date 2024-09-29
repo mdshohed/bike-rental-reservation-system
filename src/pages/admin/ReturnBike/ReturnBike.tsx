@@ -4,6 +4,7 @@ import type { TableProps } from "antd";
 import { useGetAllRentalQuery } from "@/redux/features/rentalBike/rentalBikeApi";
 import { useReturnBikeMutation } from "@/redux/features/returnBike/returnBikeApi";
 import { toast } from "sonner";
+import SearchField from "@/components/ui/search/SearchField";
 
 interface DataType {
   key: string;
@@ -14,6 +15,7 @@ interface DataType {
   returnTime: string;
   totalPaid: number;
   totalCost: number;
+  discount: number
   isReturned: boolean;
 }
 
@@ -28,8 +30,9 @@ const ReturnBike: React.FC = () => {
       userName: item.userId.name,
       userEmail: item.userId.email,
       startTime: item.startTime,
-      returnTime: item.returnTime ? item.returnTime : "Pending",
-      totalPaid: item.totalPaid,
+      returnTime: item.returnTime ? item.returnTime : "N/A",
+      totalPaid: item.totalPaid ? item.totalPaid : 0,
+      discount: (item.discount ? item.discount : 0 ), 
       totalCost: parseFloat(item.totalCost.toFixed(3)),
       isReturned: item.isReturned,
     });
@@ -88,18 +91,35 @@ const ReturnBike: React.FC = () => {
       key: "totalCost",
     },
     {
+      title: "Discount",
+      dataIndex: "discount",
+      key: "discount",
+      render: (item) => ( <div>{item}%</div> )
+    },
+    {
       title: "Action",
       key: "action",
       render: (item) => {
         if (!item.isReturned) {
           return (
             <Space size="middle">
-              <a
+              <p
                 onClick={() => handleUpdateRental(item.key)}
-                className="text-white hover:text-gray-200 rounded-md bg-blue-500 px-6 py-2 "
+                className="text-white cursor-pointer hover:text-gray-200 rounded-md bg-red-500 px-6 py-2 "
               >
                 Calculate
-              </a>
+              </p>
+            </Space>
+          );
+        }
+        else{
+          return (
+            <Space size="middle">
+              <p
+                className="text-white rounded-md bg-gray-500 px-6 py-2 "
+              >
+                Returned
+              </p>
             </Space>
           );
         }
@@ -110,7 +130,12 @@ const ReturnBike: React.FC = () => {
     <div className="mt-3">
       <div>
         <h1 className="text-2xl text-black font-semibold">Rental Details</h1>
-        <h1 className="text-md my-2">Manage Rental Details and Updated Bike Return</h1>
+        <h1 className="text-[16px] my-2">Manage Rental Details and Updated Bike Return</h1>
+        <div className="my-4">
+            <div>
+              <SearchField></SearchField>
+            </div>
+          </div>
       </div>
       <div className="mt-10 overflow-x-auto">
         <Table<DataType>

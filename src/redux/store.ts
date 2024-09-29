@@ -1,5 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/auth/authSlice";
+import rentalSlice from "./features/rentalBike/rentalSlice";
 import { baseApi } from "./api/baseApi";
 import { 
   persistReducer, 
@@ -10,42 +11,50 @@ import {
   PERSIST,
   PURGE,
   REGISTER,
-} from 'redux-persist'
+} from 'redux-persist';
 import storage from "redux-persist/lib/storage";
-import rentalSlice from "./features/rentalBike/rentalSlice";
 
-const persistConfig = {
-  key: 'auth', 
+// Persist configurations for each reducer
+const authPersistConfig = {
+  key: 'auth', // Separate key for auth
   storage,
-}
+};
 
-const persisteAuthReducer = persistReducer(persistConfig, authReducer)
-const persistrRentalReducer = persistReducer(persistConfig, rentalSlice)
+const rentalPersistConfig = {
+  key: 'rental', // Separate key for rental
+  storage,
+};
 
+// Apply persistence to reducers
+const persistedAuthReducer = persistReducer(authPersistConfig, authReducer);
+const persistedRentalReducer = persistReducer(rentalPersistConfig, rentalSlice);
+
+// Configure store
 export const store = configureStore({
   reducer: {
     [baseApi.reducerPath]: baseApi.reducer, 
-    auth: persisteAuthReducer,
-    rental: persistrRentalReducer, 
+    auth: persistedAuthReducer,
+    rental: persistedRentalReducer, 
   },
-  middleware: (getDefaultMiddlewares) => getDefaultMiddlewares({
-    serializableCheck: {
-      ignoredActions: [
-        FLUSH,
-        REHYDRATE,
-        PAUSE,
-        PERSIST,
-        PURGE,
-        REGISTER,
-      ],
-      ignoredPaths: ['firebase', 'firestore'],
-    },
-  }).concat(baseApi.middleware)
-})
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: {
+        ignoredActions: [
+          FLUSH,
+          REHYDRATE,
+          PAUSE,
+          PERSIST,
+          PURGE,
+          REGISTER,
+        ],
+        ignoredPaths: ['firebase', 'firestore'],
+      },
+    }).concat(baseApi.middleware),
+});
 
-// Infer the `RootState` and `AppDispatch` types from the store itself
-export type RootState = ReturnType<typeof store.getState>
-// Inferred type: {posts: PostsState, comments: CommentsState, users: UsersState}
-export type AppDispatch = typeof store.dispatch
+// Infer types for RootState and AppDispatch
+export type RootState = ReturnType<typeof store.getState>;
+export type AppDispatch = typeof store.dispatch;
 
-export const persistor = persistStore(store); 
+// Configure persistor
+export const persistor = persistStore(store);

@@ -8,7 +8,7 @@ const returnBikeApi = baseApi.injectEndpoints({
           method: "PUT",
           body: updatedRental,
       }),
-      invalidatesTags: ["rentalBike"],
+      invalidatesTags: ["rentalBike", 'bikes'],
     }),
   })
 })

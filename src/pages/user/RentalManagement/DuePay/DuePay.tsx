@@ -5,13 +5,13 @@ import {
 } from '@stripe/react-stripe-js';
 
 import CheckoutForm from './CheckoutForm';
-import ProtectedRoute from '../layout/ProtectedRoute';
+import ProtectedRoute from '@/components/layout/ProtectedRoute';
 
 const id = import.meta.env.PAYMENT_GATEWAY_PK; 
 // const stripePromise = loadStripe(import.meta.env.PAYMENT_GATEWAY_PK);
 const stripePromise = loadStripe('pk_test_51L2b0xGxIFJC1OANbUH0gPXgCXdBnKy2SywsHmIvnOGkad1XXygdKhQ4NaDIPGBIVUQdqiHcnsbF535d9yWJli1x00Uaf0y01h');
 
-const Payment = () => {  
+const DuePay = () => {  
   
   return (
     <ProtectedRoute>
@@ -20,8 +20,8 @@ const Payment = () => {
         <CheckoutForm />
       </Elements>
     </div>
-      </ProtectedRoute>
+    </ProtectedRoute>
   );
 };
 
-export default Payment;
+export default DuePay;

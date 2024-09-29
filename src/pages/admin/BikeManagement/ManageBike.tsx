@@ -97,22 +97,22 @@ const ManageBike: React.FC = () => {
     }
   };
 
-  const handleStatusChange = async (data: TBike) => {
-    const toastId = toast.loading("Updated Loading...");
-    const payload = {
-      isAvailable: data.isAvailable ? false : true,
-    };
-    const id = data?._id ? data?._id : "";
-    try {
-      await updateBike({ id: id, updatedBike: payload });
-      toast.success("Status Change Successfully!", {
-        id: toastId,
-        duration: 2000,
-      });
-    } catch (err) {
-      toast.error("Something went wrong", { id: toastId });
-    }
-  };
+  // const handleStatusChange = async (data: TBike) => {
+  //   const toastId = toast.loading("Updated Loading...");
+  //   const payload = {
+  //     isAvailable: data.isAvailable ? false : true,
+  //   };
+  //   const id = data?._id ? data?._id : "";
+  //   try {
+  //     await updateBike({ id: id, updatedBike: payload });
+  //     toast.success("Status Change Successfully!", {
+  //       id: toastId,
+  //       duration: 2000,
+  //     });
+  //   } catch (err) {
+  //     toast.error("Something went wrong", { id: toastId });
+  //   }
+  // };
 
   const handleAddBike = async () => {
     try {
@@ -233,8 +233,10 @@ const ManageBike: React.FC = () => {
       dataIndex: "isAvailable",
       key: "isAvailable",
       render: (_, record) => (
-        <div onClick={() => handleStatusChange(record)}>
-          <Switch defaultChecked={record.isAvailable}></Switch>
+        <div 
+        // onClick={() => handleStatusChange(record)}
+        >
+          <p className={`text-white w-10 text-center  rounded-md ${record.isAvailable ? 'bg-green-500' : 'bg-gray-500'}`}>{ record.isAvailable ? "Yes" : "No"}</p>
         </div>
       ),
     },

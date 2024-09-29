@@ -1,6 +1,6 @@
-import { useGetSingleBikesQuery } from "@/redux/features/bikes/bikesApi";
-import {  useState } from "react";
-import {  useNavigate, useParams } from "react-router-dom";
+import { useGetSingleBikesAndBikeStatusQuery, useGetSingleBikesQuery } from "@/redux/features/bikes/bikesApi";
+import { useEffect, useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 
 import dayjs from "dayjs";
 
@@ -11,42 +11,59 @@ dayjs.extend(buddhistEra);
 import { Description, Dialog, DialogPanel } from "@headlessui/react";
 import { AnimatePresence, motion } from "framer-motion";
 import GlobalLoader from "../ui/loaders/GlobalLoader";
-import { DatePicker, Modal } from "antd";
+import { DatePicker, Modal, Select } from "antd";
 import { useAppSelector } from "@/redux/hooks";
 import { useCurrentToken } from "@/redux/features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { addBookingDetail } from "@/redux/features/rentalBike/rentalSlice";
+import CompareBox from "./CompareBox";
+import Swal from "sweetalert2";
 
 const BikeView = () => {
-  const token = useAppSelector(useCurrentToken); 
-  const dispatch = useDispatch(); 
+  useEffect(() => {
+    window.scrollTo(0, 0); 
+  }, []);
+  const token = useAppSelector(useCurrentToken);
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { id } = useParams();
   const { data: bikeData, isLoading } = useGetSingleBikesQuery(id);
   let [isOpen, setIsOpen] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedDate, setSelectedDate] = useState<dayjs.Dayjs>(dayjs());
+  // const { data, isLoading: availableLoading }  = useGetSingleBikesAndBikeStatusQuery(id as string)
 
-  const handleBookingProcess = () =>{
-    if(!token){
-      setIsModalOpen(true); 
+  // const { data: movie } = data.singleBike; 
+  // const reviews = data.bikeStatus.data;
+
+  const handleBookingProcess = () => {
+    console.log("bikeIsAvailable", bikeData);
+    if( !bikeData?.data?.isAvailable){
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Bike is Already Booked",
+      });
+      return;
     }
-    else {
+    if (!token) {
+      setIsModalOpen(true);
+    } else {
       setIsOpen((e) => !e);
     }
-  }
+  };
 
   const handleNavigateToCheckout = () => {
     setIsOpen((e) => !e);
     const selectedTime = new Date(selectedDate?.$d).toISOString();
     if (selectedTime) {
       const payload = {
-        bookingId: id, 
-        selectedTime: selectedTime, 
-        method: 'create'
-      }
-      
-      dispatch(addBookingDetail(payload))
+        bookingId: id,
+        selectedTime: selectedTime,
+        method: "create",
+      };
+
+      dispatch(addBookingDetail(payload));
       navigate(`/checkout`);
     }
   };
@@ -55,7 +72,7 @@ const BikeView = () => {
     <>
       {isLoading && <GlobalLoader />}
 
-      <div className="bg-gray-100 dark:bg-gray-800 py-8 text-gray-900 dark:text-gray-200">
+      <div className="bg-gray-100 dark:bg-gray-800 pb-10 pt-[60px] text-gray-900 dark:text-gray-200 ">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col md:flex-row -mx-4">
             <div className="w-full md:w-1/2 px-4">
@@ -74,14 +91,10 @@ const BikeView = () => {
                   {bikeData?.data.name}
                 </h2>
               </div>
+              
               <div>
-                <p className="text-gray-600  md:text-start dark:text-gray-300 text-[14px] sm:text-[18px]">
-                  {bikeData?.data.description}
-                </p>
-              </div>
-              <div>
-                <p className="whitespace-nowrap text-xl">
-                  brand:{" "}
+                <p className="whitespace-nowrap text-lg">
+                  Brand:{" "}
                   <span className="font-medium text-gray-900 dark:text-white">
                     {bikeData?.data.brand}
                   </span>
@@ -89,8 +102,8 @@ const BikeView = () => {
               </div>
 
               <div>
-                <p className="whitespace-nowrap text-xl">
-                  year:{" "}
+                <p className="whitespace-nowrap text-lg">
+                  Year:{" "}
                   <span className="font-medium text-gray-900 dark:text-white">
                     {bikeData?.data.year}
                   </span>
@@ -98,15 +111,15 @@ const BikeView = () => {
               </div>
 
               <div>
-                <p className="whitespace-nowrap text-xl">
-                  model:{" "}
+                <p className="whitespace-nowrap text-lg">
+                  Model:{" "}
                   <span className="font-medium text-gray-900 dark:text-white">
                     {bikeData?.data.model}
                   </span>
                 </p>
               </div>
               <div>
-                <p className="whitespace-nowrap text-xl">
+                <p className="whitespace-nowrap text-lg">
                   Engine Capacity:{" "}
                   <span className="font-medium text-gray-900 dark:text-white">
                     {bikeData?.data.cc} cc
@@ -114,29 +127,45 @@ const BikeView = () => {
                 </p>
               </div>
 
-              <div className="flex text-xl justify-start items-center mb-4">
+              <div className="flex text-lg justify-start items-center mb-4">
                 <p>Rental Cost: </p>
                 <p>
                   <span className="text-green-500 ms-2 font-bold ">
                     ${bikeData?.data.pricePerHour.toFixed(2)}
                   </span>
-                  /perHours
+                  /Hour
                 </p>
               </div>
 
               <div
-                // onClick={handleBookingProcess}
                 onClick={handleBookingProcess}
                 className="flex -m-2"
               >
                 <div className="w-full">
-                  <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
-                    Book Now
-                  </button>
+                  {
+                    bikeData?.data?.isAvailable ?
+                    <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                      Book Now
+                    </button>
+                    : 
+                    <button className="w-full bg-gray-900 dark:bg-gray-600 text-white py-2 px-4 rounded-full font-bold hover:bg-gray-800 dark:hover:bg-gray-700">
+                      Booked
+                    </button>
+                  }
+                  
                 </div>
               </div>
             </div>
+            
           </div>
+          <div className="my-4">
+            <p className="text-gray-600 font-semibold  md:text-start dark:text-gray-300 text-[14px] sm:text-[18px]">
+              Description: <span className="font-normal"> {bikeData?.data.description}</span>
+            </p>
+          </div>
+          
+          <CompareBox id={bikeData?.data._id}></CompareBox>
+          
           {isOpen ? (
             <>
               <AnimatePresence>
@@ -207,7 +236,12 @@ const BikeView = () => {
             }}
             footer={() => (
               <div className="flex  justify-end items-stretch">
-                <button className="bg-blue-500 text-white px-4 py-2 rounded-md" onClick={() => navigate("/login")}>Yes, Proceed to Login</button>
+                <button
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md"
+                  onClick={() => navigate("/login")}
+                >
+                  Yes, Proceed to Login
+                </button>
               </div>
             )}
           >

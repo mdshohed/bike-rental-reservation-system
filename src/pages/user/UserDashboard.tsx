@@ -1,8 +1,8 @@
 
 const UserDashboard = () => {
   return (
-    <div>
-      <h1>User Dashboard Coming Soon...</h1>
+    <div className="py-10 bg-red-100 my-2 rounded-lg">
+      <h1 className="text-center text-lg">User Dashboard Coming Soon...</h1>
     </div>
   );
 };

@@ -7,7 +7,17 @@ const rentalBikeApi = baseApi.injectEndpoints({
           url: '/rentals',
           method: 'GET',
         }),
-        providesTags: ["rentalBike"]
+        providesTags: ["rentalBike", 'bikes']
+      }
+    ),
+
+    bikeIsAvailable: builder.query({
+      query: (id) => ({
+          url: '/rentals/bikeIsAvailable',
+          method: 'GET',
+          data: {bikeId:id}
+        }),
+        providesTags: ["rentalBike", 'bikes']
       }
     ),
     createRental: builder.mutation({
@@ -16,7 +26,7 @@ const rentalBikeApi = baseApi.injectEndpoints({
         method: "POST",
         body: newRental,
       }),
-      invalidatesTags: ["rentalBike"],
+      invalidatesTags: ["rentalBike", 'bikes'],
     }),
     updateRental: builder.mutation({
       query: (payload) => {
@@ -27,7 +37,7 @@ const rentalBikeApi = baseApi.injectEndpoints({
           method: "PUT",
           body: payload,
       }},
-      invalidatesTags: ["rentalBike"],
+      invalidatesTags: ["rentalBike", 'bikes'],
     }),
   })
 })
@@ -35,5 +45,6 @@ const rentalBikeApi = baseApi.injectEndpoints({
 export const { 
   useCreateRentalMutation,
   useGetAllRentalQuery,
-  useUpdateRentalMutation
+  useUpdateRentalMutation,
+  useBikeIsAvailableQuery
  } = rentalBikeApi; 

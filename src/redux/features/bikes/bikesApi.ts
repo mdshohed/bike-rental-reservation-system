@@ -7,9 +7,39 @@ const bikesApi = baseApi.injectEndpoints({
           url: '/bikes',
           method: 'GET',
         }),
-        providesTags: ["bikes"]
+        providesTags: ["bikes", 'rentalBike']
       }
     ),
+    getSingleBikesAndBikeStatus: builder.query({
+      queryFn: async (id: string): Promise<any> => {
+        try {
+          const [singleBike, bikeStatus] = await Promise.all([
+            fetch(`http://localhost:5000/api/bikes/${id}`),
+            fetch(`http://localhost:5000/api/rentals/bikeIsAvailable/${id}`),
+          ]);
+    
+          if (!singleBike.ok || !bikeStatus.ok) {
+            throw new Error("Something went wrong!");
+          }
+    
+          const [singleBikeData, bikeStatusData] = await Promise.all([
+            singleBike.json(), 
+            bikeStatus.json()
+          ]);
+    
+          return {
+            data: {
+              singleBike: singleBikeData,
+              bikeStatus: bikeStatusData,
+            },
+          };
+        } catch (err) {
+          return { error: { message: "An error occurred" } };
+        }
+      },
+      providesTags: ["bikes"],
+    }),
+    
     getSingleBikes: builder.query({
       query: (id) => {
         return {
@@ -17,14 +47,14 @@ const bikesApi = baseApi.injectEndpoints({
           method: "GET",
         };
       },
-      providesTags: ["bikes"],
+      providesTags: ["bikes", 'rentalBike'],
     }),
     deleteBike: builder.mutation({
       query: (id) => ({
         url: `/bikes/${id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["bikes"],
+      invalidatesTags: ["bikes", 'rentalBike'],
     }),
     addBike: builder.mutation({
       query: (newBike) => ({
@@ -32,7 +62,7 @@ const bikesApi = baseApi.injectEndpoints({
         method: "POST",
         body: newBike,
       }),
-      invalidatesTags: ["bikes"],
+      invalidatesTags: ["bikes",'rentalBike'],
     }),
     updateBike: builder.mutation({
       query: ({ id, updatedBike }) => ({
@@ -40,7 +70,7 @@ const bikesApi = baseApi.injectEndpoints({
           method: "PUT",
           body: updatedBike,
       }),
-      invalidatesTags: ["bikes"],
+      invalidatesTags: ["bikes",'rentalBike'],
     }),
   })
 })
@@ -50,5 +80,6 @@ export const {
   useGetSingleBikesQuery,
   useAddBikeMutation,
   useUpdateBikeMutation,
-  useDeleteBikeMutation
+  useDeleteBikeMutation,
+  useGetSingleBikesAndBikeStatusQuery
  } = bikesApi; 

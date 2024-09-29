@@ -22,6 +22,7 @@ const AvatarNav: React.FC = () => {
   
     setIsLoggingOut(false);
     dispatch(logout()); 
+    
   };
 
   const items: MenuProps["items"] = [

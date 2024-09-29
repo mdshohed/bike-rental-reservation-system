@@ -16,6 +16,7 @@ export type TUserPath = {
   name: string, 
   path?: string, 
   element?: ReactNode,
+  icon?: ReactNode, 
   index?: boolean,
   children?: TUserPath[]
 }

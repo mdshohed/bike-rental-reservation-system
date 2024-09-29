@@ -20,6 +20,7 @@ export interface TBike {
   isAvailable: boolean;
   cc: number;
   year: number;
+  percentageOff?: number;
   model: string;
   brand: string;
 }

@@ -1,23 +1,16 @@
-import { useUpdateBikeMutation } from "@/redux/features/bikes/bikesApi";
-import { useGetAllCouponQuery } from "@/redux/features/coupon/couponApi";
 import { useAddPaymentMutation } from "@/redux/features/payment/stripeApi";
 import {
-  useCreateRentalMutation,
   useUpdateRentalMutation,
 } from "@/redux/features/rentalBike/rentalBikeApi";
 import { clearBookingDetail } from "@/redux/features/rentalBike/rentalSlice";
 import { useAppDispatch, useAppSelector } from "@/redux/hooks";
-import { TCoupon } from "@/types/coupon";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { Input } from "antd";
-import { SearchProps } from "antd/es/input";
 
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
-import Swal from "sweetalert2";
 
-const { Search } = Input;
 
 const CheckoutForm = () => {
   const dispatch = useAppDispatch();
@@ -37,11 +30,7 @@ const CheckoutForm = () => {
   const [addPayment, { isError }] = useAddPaymentMutation();
 
   const [clientSecret, setClientSecret] = useState("");
-  const [createRental] = useCreateRentalMutation();
   const [updateRental] = useUpdateRentalMutation();
-  const {data: coupons} = useGetAllCouponQuery(null);
-
-  const [discount, setDiscount] = useState(0);
 
   useEffect(() => {
     const initiatePayment = async () => {
@@ -112,9 +101,6 @@ const CheckoutForm = () => {
         setTransactionId(paymentIntent.id);
 
         try {
-
-          // due pay part
-          if (method == "update") {
             const payload = {
               id: bookingId,
               totalPaid: details.totalPaid,
@@ -128,59 +114,13 @@ const CheckoutForm = () => {
               dispatch(clearBookingDetail());
               toast.success(`${res.message}`, { id: toastId, duration: 2000 });
             }
-          } else {
 
-            
-            // booking part
-            const payload = {
-              bikeId: bookingId,
-              startTime: selectedTime,
-              totalPaid: details.totalPaid,
-              discount: discount, 
-            };
-            console.log("payload", payload);
-            
-            const res = await createRental(payload).unwrap();
-            if (res.statusCode === 200 && res.success) {
-              navigate(`/`);
-              dispatch(clearBookingDetail());
-              toast.success(`${res.message}`, { id: toastId, duration: 2000 });
-            }
-          }
         } catch (err) {
           toast.error("Booking Error!", { id: toastId, duration: 2000 });
         }
       }
     }
   };
-
-
-  const onSearch: SearchProps['onSearch'] = (value) => {
-    if(value==''){
-      Swal.fire({
-        icon: "question",
-        text: "Please enter a coupon code!",
-      });
-      return;
-    }
-    const findCoupon = coupons?.data.find((item:TCoupon)=>item.couponCode == value.trim())
-    if(findCoupon){
-      setDiscount(findCoupon.percentage)
-      Swal.fire({
-        icon:'success',
-        title: `Congratulation!! You are getting ${findCoupon.percentage}% discount for your booking`,
-
-      });
-    }
-    else{
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Invalid Coupon Code!",
-      });
-    }
-  };
-
 
   return (
     <div>
@@ -245,7 +185,7 @@ const CheckoutForm = () => {
                       htmlFor="paid"
                       className="mb-2 block text-sm font-medium text-gray-900 dark:text-white"
                     >
-                      {method == "update" ? "Due Amount" : "Advance Paid"}
+                      Due Amount
                     </label>
                     <Input
                       value={details.totalPaid}
@@ -261,25 +201,9 @@ const CheckoutForm = () => {
                       className="py-2"
                       // className="block w-full rounded-lg focus:border-blue-500 bg-gray-50 p-2.5 pe-10 text-sm text-gray-900     dark:text-white dark:placeholder:text-gray-400 "
                       placeholder=""
-                      // pattern="^4[0-9]{12}(?:[0-9]{3})?$"
-                      // required
                     />
                   </div>
                 </div>
-                {
-                  method !== "update" && 
-                  <div className="">
-                    <h1>Coupon Code</h1>
-                  <Search
-                    placeholder="Promo / Coupon"
-                    allowClear
-                    enterButton="Apply Coupon"
-                    className="w-full"
-                    size="large"
-                    onSearch={onSearch}
-                  />
-                </div>
-                }
                 
                 <div className="my-10 border p-2 rounded-md">
                   <CardElement

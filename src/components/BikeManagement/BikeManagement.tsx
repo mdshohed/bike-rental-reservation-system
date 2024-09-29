@@ -17,21 +17,11 @@ import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
-  DialogPanel,
-  Disclosure,
-  DisclosureButton,
-  DisclosurePanel,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuItems,
+  DialogPanel
 } from "@headlessui/react";
-import { ListBulletIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 import {
-  ChevronDownIcon,
   FunnelIcon,
-  MinusIcon,
-  PlusIcon,
   Squares2X2Icon,
 } from "@heroicons/react/20/solid";
 import { AlignJustify, MapPinHouse, Phone } from "lucide-react";
@@ -40,67 +30,50 @@ import BikeCard1 from "./BikeCard1";
 import { TBike } from "@/utils";
 import BikeCard2 from "./BikeCard2";
 import GlobalLoader from "../ui/loaders/GlobalLoader";
-import SearchField from "@/pages/Home/search/SearchField";
+import hand from '../../assets/images/hand.png'
+import wheel from '../../assets/images/spin-wheel.png'
+
 import { Select } from "antd";
+import {  useNavigate } from "react-router-dom";
 const sortOptions = [
   { label: "Default", value: "all" },
   { label: "Cost: Low to High", value: "low" },
   { label: "Cost: High to Low", value: "high" },
 ];
-const subCategories = [
-  { name: "Totes", href: "#" },
-  { name: "Backpacks", href: "#" },
-  { name: "Travel Bags", href: "#" },
-  { name: "Hip Bags", href: "#" },
-  { name: "Laptop Sleeves", href: "#" },
-];
-const filters = [
-  {
-    id: "color",
-    name: "Color",
-    options: [
-      { value: "white", label: "White", checked: false },
-      { value: "beige", label: "Beige", checked: false },
-      { value: "blue", label: "Blue", checked: true },
-      { value: "brown", label: "Brown", checked: false },
-      { value: "green", label: "Green", checked: false },
-      { value: "purple", label: "Purple", checked: false },
-    ],
-  },
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "new-arrivals", label: "New Arrivals", checked: false },
-      { value: "sale", label: "Sale", checked: false },
-      { value: "travel", label: "Travel", checked: true },
-      { value: "organization", label: "Organization", checked: false },
-      { value: "accessories", label: "Accessories", checked: false },
-    ],
-  },
-];
 
 type TSelectType = {
   value: string;
   label: string;
+  isTrue: boolean;
 };
 type TYearSelectType = {
   value: number;
   label: number;
 };
 
+
 const BikeManagement = () => {
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [cardMode, setCardMode] = useState("list");
-  const { data: bikes, isLoading, error } = useGetAllBikesQuery(null);
+  const { data, isLoading } = useGetAllBikesQuery(null);
+  const [bikes, setBikes] = useState<TBike[]>([])
 
   const [models, setModels] = useState<TSelectType[]>([]);
   const [brands, setBrands] = useState<TSelectType[]>([]);
   const [years, setYears] = useState<TYearSelectType[]>([]);
+  const [selectedModels, setSelectedModels] = useState<string[]>([]);
+  const [selectedBrands, setSelectedBrands] = useState<string[]>([]);
+  const [selectedYears, setSelectedYears] = useState<number[]>([]);
 
   useEffect(() => {
-    if (bikes?.data && bikes) {
-      const allBrand = bikes?.data?.reduce(
+    if (data?.data && data) {
+      setBikes(data?.data); 
+    }
+  }, [data]);
+
+  useEffect(() => {
+    if (data?.data && data) {
+      const allBrand = data?.data?.reduce(
         (acc: TSelectType[], item: TBike) => {
           if (!acc.some((brand) => brand.value === item.brand)) {
             acc.push({ value: item.brand, label: item.brand });
@@ -109,9 +82,10 @@ const BikeManagement = () => {
         },
         []
       );
-      const newBrand = [{ label: "All Brands", value: "all" }, ...allBrand];
+      // const newBrand = [{ label: "All Brands", value: "all" }, ...allBrand];
+      const newBrand = [...allBrand];
       setBrands(newBrand);
-      const allModels = bikes?.data?.reduce(
+      const allModels = data?.data?.reduce(
         (acc: TSelectType[], item: TBike) => {
           if (!acc.some((model) => model.value === item.model)) {
             acc.push({ value: item.model, label: item.model });
@@ -120,9 +94,9 @@ const BikeManagement = () => {
         },
         []
       );
-      const newModels = [{ label: "All Models", value: "all" }, ...allModels];
+      const newModels = [ ...allModels];
       setModels(newModels);
-      const allYears = bikes?.data?.reduce(
+      const allYears = data?.data?.reduce(
         (acc: TYearSelectType[], item: TBike) => {
           if (!acc.some((brand) => brand.value === item.year)) {
             acc.push({ value: item.year, label: item.year });
@@ -131,17 +105,62 @@ const BikeManagement = () => {
         },
         []
       );
-      const newYears = [{ label: "All Years", value: "all" }, ...allYears];
+      const newYears = [...allYears];
       setYears(newYears);
     }
-  }, [bikes]);
-  const onChange = (value: string) => {
-    console.log(`selected ${value}`);
+  }, [data]);
+
+  useEffect(()=>{
+    console.log("", selectedBrands, selectedModels, selectedYears);
+
+    if((!selectedBrands.length)&&(!selectedModels.length)&&(!selectedYears.length)){
+      setBikes(data?.data);
+      
+    }
+    else{
+      const filterData = data?.data?.filter((item: TBike) => {
+        return selectedBrands.includes(item.brand) || selectedModels.includes(item.model) || selectedYears.includes(item.year);
+      });
+      setBikes(filterData) 
+    }
+
+  },[selectedBrands,selectedModels,selectedYears])
+
+  const onBrandChange = (values: string[]) => {
+    // const newBikes = data?.data?.filter((item: TBike) => {
+    //   return values.includes(item.brand);
+    // });    
+    setSelectedBrands(values);
+  }
+  
+  const onModelChange = (values: string[]) => {
+    setSelectedModels(values)
+  };
+  const onYearChange = (values: number[]) => {
+    setSelectedYears(values)
   };
 
   const onSearch = (value: string) => {
     console.log("search:", value);
   };
+
+  const navigate = useNavigate(); 
+
+  const handleNavigateAndScroll = () => {
+    navigate("/home");
+    setTimeout(() => {
+      const element = document.getElementById("spin");
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }, 0); // Delay to ensure navigation happens first
+  };
+
+  // filter function
+  const handleSearchBike = (e: string) =>{
+    const newBikes = data?.data.filter( (item: TBike)=>item.name.includes(e.trim()));
+    setBikes(newBikes); 
+  }
 
   return (
     <div className="">
@@ -247,11 +266,10 @@ const BikeManagement = () => {
                   <Select
                     mode="multiple"
                     showSearch
-                    placeholder="Select A Model"
-                    defaultValue="all"
+                    placeholder="Select A Brand"
                     optionFilterProp="label"
                     className="w-full "
-                    onChange={onChange}
+                    onChange={onBrandChange}
                     onSearch={onSearch}
                     options={brands}
                   />
@@ -262,11 +280,10 @@ const BikeManagement = () => {
                   <Select
                     mode="multiple"
                     showSearch
-                    placeholder="Select A Brand"
-                    defaultValue="all"
+                    placeholder="Select A Model"
                     optionFilterProp="label"
                     className="w-full "
-                    onChange={onChange}
+                    onChange={onModelChange}
                     onSearch={onSearch}
                     options={models}
                   />
@@ -278,10 +295,9 @@ const BikeManagement = () => {
                     mode="multiple"
                     showSearch
                     placeholder="Select A Year"
-                    defaultValue="all"
-                    className="w-full h-10"
+                    className="w-full"
                     optionFilterProp="label"
-                    onChange={onChange}
+                    onChange={onYearChange}
                     onSearch={onSearch}
                     options={years}
                   />
@@ -296,6 +312,7 @@ const BikeManagement = () => {
           <div className="parent mt-[60px] flex flex-col sm:flex-row items-center max-w-xl mx-auto justify-center gap-y-4 sm:justify-between pr-2 sm:pr-1 sm:bg-white rounded-full relative group sm:border border-transparent sm:border-indigo-600 focus-within:border-indigo-600">
             <input
               type="text"
+              onChange={(e)=>handleSearchBike(e.target.value)}
               className="block w-full px-6 py-3.5 text-base max-sm:text-center font-normal shadow-xs max-sm:bg-white text-gray-900 bg-transparent rounded-full placeholder-gray-400 focus:outline-none leading-normal border border-indigo-600 sm:border-none"
               placeholder="Enter A Bike name "
             />
@@ -345,7 +362,7 @@ const BikeManagement = () => {
                 <Select
                   showSearch
                   placeholder="Select A Model"
-                  defaultValue="all"
+                  // defaultValue="All Brands"
                   optionFilterProp="label"
                   className="w-40"
                   // onChange={onChange}
@@ -396,11 +413,11 @@ const BikeManagement = () => {
                     <Select
                       mode="multiple"
                       showSearch
-                      placeholder="Select A Model"
-                      defaultValue="all"
+                      placeholder="Select A Brand"
+                      // defaultValue="all"
                       optionFilterProp="label"
                       className="w-full "
-                      onChange={onChange}
+                      onChange={onBrandChange}
                       onSearch={onSearch}
                       options={brands}
                     />
@@ -411,11 +428,11 @@ const BikeManagement = () => {
                     <Select
                       mode="multiple"
                       showSearch
-                      placeholder="Select A Brand"
-                      defaultValue="all"
+                      placeholder="Select A Model"
+                      // defaultValue="all"
                       optionFilterProp="label"
                       className="w-full "
-                      onChange={onChange}
+                      onChange={onModelChange}
                       onSearch={onSearch}
                       options={models}
                     />
@@ -427,10 +444,10 @@ const BikeManagement = () => {
                       mode="multiple"
                       showSearch
                       placeholder="Select A Year"
-                      defaultValue="all"
-                      className="w-full h-10"
+                      // defaultValue="all"
+                      className="w-full "
                       optionFilterProp="label"
-                      onChange={onChange}
+                      onChange={onYearChange}
                       onSearch={onSearch}
                       options={years}
                     />
@@ -441,7 +458,14 @@ const BikeManagement = () => {
                   <p className="text-2xl font-semibold">Want A Discount</p>
                   <div className="border border-red-500 w-[50%] mt-1"></div>
                   <div>
-                    
+                    <div className="flex justify-start items-center py-3">
+                        <img src={hand} alt="" />
+                        <div className="cursor-pointer" onClick={handleNavigateAndScroll}>
+                          <img className="w-20 ms-5" src={wheel} alt="" />
+                        </div>
+                    </div>
+                      <p>Go to Spin wheen Section to get a Coupon Code</p>
+                    {/* <div class="v-image__image v-image__image--cover" style="background-image: url(&quot;https://www.babu88.app/static/image/wof/wofSpin.gif&quot;); background-position: center center;"></div> */}
                   </div>
                 </div>
 
@@ -517,13 +541,13 @@ const BikeManagement = () => {
                 {/* <div className="max-w-screen-xl mx-auto p-5 sm:p-10 md:p-16"> */}
                 {cardMode === "list" ? (
                   <div className="grid grid-cols-1 gap-y-5">
-                    {bikes?.data?.map((item: TBike) => (
+                    {bikes?.map((item: TBike) => (
                       <BikeCard2 item={item}></BikeCard2>
                     ))}
                   </div>
                 ) : (
                   <div className="grid grid-cols-1  sm:grid-cols-2 gap-10">
-                    {bikes?.data?.map((item: TBike) => (
+                    {bikes?.map((item: TBike) => (
                       <BikeCard1 item={item}></BikeCard1>
                     ))}
                   </div>

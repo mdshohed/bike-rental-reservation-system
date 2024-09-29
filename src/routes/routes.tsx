@@ -8,11 +8,11 @@ import Home from "../pages/Home/Home";
 import { userPaths } from "./user.routes";
 import ErrorPage from "@/pages/Shared/ErrorPage";
 import HomeLayout from "@/components/layout/HomeLayout";
-import About from "@/pages/About";
 import BikeManagement from "@/components/BikeManagement/BikeManagement";
 import BikeView from "@/components/BikeManagement/BikeView";
 import AboutUs from "@/pages/AboutUs/AboutUs";
 import Payment from "@/components/Payment/Payment";
+import DuePay from "@/pages/user/RentalManagement/DuePay/DuePay";
 
 const router = createBrowserRouter([
   {
@@ -39,6 +39,10 @@ const router = createBrowserRouter([
       {
         path: '/checkout',
         element: <Payment />,
+      },
+      {
+        path: '/duePay/checkout',
+        element: <DuePay />,
       },
       {
         path: '/about-us',
