@@ -110,9 +110,7 @@ const CheckoutForm = () => {
       if (paymentIntent.status === "succeeded") {
         console.log(`transaction id: ${paymentIntent.id}`);
         setTransactionId(paymentIntent.id);
-
         try {
-
           // due pay part
           if (method == "update") {
             const payload = {

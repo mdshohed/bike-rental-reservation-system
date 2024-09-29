@@ -2,8 +2,8 @@ const Footer = () => {
   
   return (
     <footer className="bg-zinc-50 text-center text-surface/75 dark:bg-neutral-900 dark:text-white/75 lg:text-left">
-      <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-center border-b-2 border-neutral-200 p-6 dark:border-white/10 lg:justify-between">
+      <div className="mx-auto max-w-7xl px-[5%]">
+        <div className="flex items-center justify-center border-b-2 border-neutral-200 py-6 dark:border-white/10 lg:justify-between">
           <div className="me-12 hidden lg:block">
             <span>Get connected with us on social networks:</span>
           </div>
@@ -65,7 +65,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className="mx-6 py-10 text-center md:text-left">
+        <div className="py-10 text-center md:text-left">
           <div className="grid-1 grid gap-8 md:grid-cols-2 lg:grid-cols-4">
             <div className="">
               <h6 className="mb-4 flex items-center justify-center font-semibold uppercase md:justify-start">

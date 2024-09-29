@@ -78,7 +78,7 @@
 ## Technologies Used and Video
 
 - **Video**
-  - Video URL: []()
+  - Video URL: [Bike Rental Reservation System](https://youtu.be/DQZ-LMn-YaU)
 
 - **Frontend**:
 

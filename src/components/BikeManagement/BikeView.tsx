@@ -81,7 +81,7 @@ const BikeView = () => {
               <div className=" rounded-lg bg-gray-300 dark:bg-gray-700 mb-4">
                 <img
                   className="w-full h-full object-cover"
-                  src="https://imgd.aeplcdn.com/664x374/n/cw/ec/43482/sp-125-right-front-three-quarter-2.jpeg?isig=0&q=80"
+                  src={bikeData?.data.image}
                   alt="Product Image"
                 />
               </div>

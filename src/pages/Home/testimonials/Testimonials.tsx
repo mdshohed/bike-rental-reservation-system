@@ -6,7 +6,7 @@ const Testimonials = () => {
       <div className="flex flex-col lg:flex-row items-center py-8 max-w-7xl px-[5%] mx-auto">
         <div className="lg:w-[40%] p-5">
           <div className="text-center mb-8">
-            <span className="text-gray-500 text-sm">Testimonials</span>
+            <span className="text-gray-500 text-2xl">Testimonials</span>
             <h3 className="text-2xl font-bold mt-2">
               See what they said about us
             </h3>
