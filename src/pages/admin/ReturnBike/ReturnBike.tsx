@@ -26,9 +26,9 @@ const ReturnBike: React.FC = () => {
     // if (!item.isReturned) {
     acc.push({
       key: item?._id,
-      name: item.bikeId.name,
-      userName: item.userId.name,
-      userEmail: item.userId.email,
+      name: item.bikeId?.name,
+      userName: item.userId?.name,
+      userEmail: item.userId?.email,
       startTime: item.startTime,
       returnTime: item.returnTime ? item.returnTime : "N/A",
       totalPaid: item.totalPaid ? item.totalPaid : 0,

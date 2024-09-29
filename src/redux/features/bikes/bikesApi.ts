@@ -14,8 +14,8 @@ const bikesApi = baseApi.injectEndpoints({
       queryFn: async (id: string): Promise<any> => {
         try {
           const [singleBike, bikeStatus] = await Promise.all([
-            fetch(`http://localhost:5000/api/bikes/${id}`),
-            fetch(`http://localhost:5000/api/rentals/bikeIsAvailable/${id}`),
+            fetch(`https://bike-rental-reservation-system-server-seven.vercel.app/api/bikes/${id}`),
+            fetch(`https://bike-rental-reservation-system-server-seven.vercel.app/api/rentals/bikeIsAvailable/${id}`),
           ]);
     
           if (!singleBike.ok || !bikeStatus.ok) {
