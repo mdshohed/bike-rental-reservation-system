@@ -93,7 +93,7 @@ export function Banner() {
                     </p>
                     
                     <div className="flex justify-center items-center gap-2">
-                      <Link to="/all-sporting-goods">
+                      <Link to="/bikes">
                         <button
                           className="text-lg lg:text-xl font-medium bg-red-600 hover:bg-gray-800 text-white px-3 py-2 rounded-md"
                           color="white"
